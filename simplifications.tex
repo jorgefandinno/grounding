@@ -1,10 +1,9 @@
-\section{On-the-fly Simplifications}
-
+% ----------------------------------------------------------------------
 \begin{frame}{Propagation of Facts}
   \vfill
   \begin{itemize}
     \item simplifications are performed \alert{on-the-fly}\\
-      (rules are printed immediately but not stored in \Gringo)
+      (rules are printed immediately but not stored in \gringo)
     \item maintain a set of \alert{fact atoms}
     \item remove facts from positive body
     \item discard rules with negative literals over a fact
@@ -93,4 +92,9 @@ path(d,a) :- not omit(d,a).
       \end{itemize}
   \end{itemize}
 \end{frame}
-
+% ----------------------------------------------------------------------
+%
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../main"
+%%% End:
