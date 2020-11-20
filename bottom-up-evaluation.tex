@@ -1,11 +1,11 @@
 \begin{frame}{Bottom Up Grounding}
   \begin{itemize}
     \item ground \alert{relevant} rules by incrementally extending the Herbrand base
-    \item \(\Ground_{D}(P) = \!\begin{aligned}[t] \{ r \in \Ground(P) \mid {} & \alert{\pbody{r} \subseteq D},\\ & \mbox{all comparison literals}\\ & \mbox{in \(\Body(r)\) are satisfied} \} \end{aligned}\)
+    \item \(\cground{P}{D} = \!\begin{aligned}[t] \{ r \in \ground{P} \mid {} & \alert{\pbody{r} \subseteq D},\\ & \mbox{all comparison literals}\\ & \mbox{in \(\Body(r)\) are satisfied} \} \end{aligned}\)
   \end{itemize}
   \EmphAlgo{0.8}{
     \Fn{\(\GroundBottomUp(P,D)\)}{
-      \(G \leftarrow \Ground_{D}(P)\)\;
+      \(G \leftarrow \cground{P}{D}\)\;
       \If{\(\Head(G) \not\subseteq D\)}{
         \Return \(\GroundBottomUp(P,D \alert{\cup \Head(G)})\)\;
       }
@@ -86,7 +86,7 @@ reach(a) :- \alert{reach(d)}, path(d,a).
   \end{itemize}
   \EmphAlgo{0.8}{
     \Fn{\(\GroundBottomUp(P,D)\)}{
-      \(G \leftarrow \Ground_{D}(P)\)\;
+      \(G \leftarrow \cground{P}{D}\)\;
       \If{\(\Head(G) \not\subseteq D\)}{
         \Return \(\GroundBottomUp(P,D \alert{\cup \Head(G)})\)\;
       }

@@ -68,7 +68,7 @@ reach(Y) :- \alert{n(reach(X))}, \alert{a(path(X,Y))}.
         \((O,N) \leftarrow (\emptyset,A)\)\;
         \Repeat{\(N=\emptyset\)}{
           \Let \(D_p = \{ p(a) \mid a \in D \}\) for set \(D\) of atoms\;
-          \(G' \leftarrow \alert{\Ground_{O_o \cup N_n \cup A_a}(\text{prepared } C)}\)\;
+          \(G' \leftarrow \alert{\cground{\text{prepared } C}{O_o \cup N_n \cup A_a}}\)\;
           \(N \leftarrow \Head(G') \setminus A\)\;
           \((G,O,A) \leftarrow (G \cup G', A, N \cup A)\)\;
         }
