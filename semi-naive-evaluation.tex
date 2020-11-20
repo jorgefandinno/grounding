@@ -1,0 +1,127 @@
+
+
+\begin{frame}{Recursive Atoms}
+  \vfill
+  \begin{itemize}
+    \item given \(L_P = (C_1, \dots, C_n)\), an atom \(a_1\) is \alert{recursive} in component \(C_i\) if \(a_1\) unifies \(a_2\) such that
+      \begin{itemize}
+        \item \(r_1 \in C_i\) and \(r_2 \in C_j\) with \(i \leq j\),
+        \item \(a_1 \in \pbody{r_1}\cup\nbody{r_1}\), and
+        \item \(a_2 \in \Head(r_2)\)
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Example: Recursive Atoms}
+  \vfill
+  \begin{center}
+  \DepGraph[\alert]
+  \end{center}
+\end{frame}
+
+\begin{frame}{Preparing Components}
+  \vfill
+  \begin{itemize}
+    \item the set of \alert{prepared rules} for \(r \in C\) is\\
+      \(\arraycolsep=1.4pt
+        \left\{\begin{array}{rcllllllll}
+          h & \texttt{:-} & \alert{n(b_1)}, & a(b_2),   & a(b_3), & \dots, & a(b_{i-2}), & a(b_{i-1}), & a(b_i), & B\\
+          h & \texttt{:-} & o(b_1), & \alert{n(b_2)},   & a(b_3), & \dots, & a(b_{i-2}), & a(b_{i-1}), & a(b_i), & B\\
+          \vdots &        & \vdots  &         &         & \ddots &             &             & \vdots  & \vdots \\
+          h & \texttt{:-} & o(b_1), & o(b_2), & o(b_3), & \dots, & o(b_{i-2}), & \alert{n(b_{i-1})}, & a(b_i), & B\\
+          h & \texttt{:-} & o(b_1), & o(b_2), & o(b_3), & \dots, & o(b_{i-2}), & o(b_{i-1}), & \alert{n(b_i)}, & B
+        \end{array}\right\}\)\\
+      or \(\{h \texttt{ :- } n(b_{i+1}), \dots, n(b_j), b_{j+1}, \dots, b_n\}\) if \(i=0\)
+      \begin{itemize}
+        \item[where]
+          \(\Body(r) = \{ b_1, \dots, b_i, b_{i+1} \dots, b_j, b_{j+1}, \dots, b_n \}\), \\
+          \(b_k\in\pbody{r}\) for \(1\leq k \leq i\) is recursive, \\
+          \(b_k\in\pbody{r}\) for \(i< k \leq j\) is not recursive, and \\
+          \(B = a(b_{i+1}), \dots, a(b_j), b_{j+1}, \dots, b_n\)
+      \end{itemize}
+    \item a \alert{prepared component} is the union of all its prepared rules
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Example: Preparing Components}
+  \vfill
+\begin{SemiVerbatim}{.9}
+{\color{comment}\% prepared Component\Sub{1,1}}
+omit(X,Y) :- \alert{n(edge(X,Y))}, not path(X,Y).
+{\color{comment}\% prepared Component\Sub{1,2}}
+path(X,Y) :- \alert{n(edge(X,Y))}, not omit(X,Y).
+{\color{comment}\% prepared Component\Sub{2,1}}
+:- \alert{n(path(X,Y))}, \alert{n(path(X',Y))}, X < X'.
+...
+{\color{comment}\% prepared Component\Sub{7,1}}
+reach(Y) :- \alert{n(reach(X))}, \alert{a(path(X,Y))}.
+...
+\end{SemiVerbatim}
+\end{frame}
+
+\begin{frame}{Semi-naive Evaluation-based Grounding}
+  \vfill
+  \EmphAlgo{.95}{
+    \Fn{\(\GroundSemiNaive(P,A)\)}{
+      \(G \leftarrow \emptyset\)\;
+      \ForEach{\(C\) \In \(L_P\)}{
+        \((O,N) \leftarrow (\emptyset,A)\)\;
+        \Repeat{\(N=\emptyset\)}{
+          \Let \(D_p = \{ p(a) \mid a \in D \}\) for set \(D\) of atoms\;
+          \(G' \leftarrow \alert{\Ground_{O_o \cup N_n \cup A_a}(\text{prepared } C)}\)\;
+          \(N \leftarrow \Head(G') \setminus A\)\;
+          \((G,O,A) \leftarrow (G \cup G', A, N \cup A)\)\;
+        }
+      }
+      \Return \(G \text{ with \(o/1\), \(n/1\), \(a/1\) stripped from positive bodies}\)\;
+    }
+  }
+  \begin{itemize}
+    \item given safe program \(P\) and set of facts \(I\), \(P \cup I\) is equivalent to \(\GroundSemiNaive(P,\Head(I)) \cup I\)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Example: Grounding Component\(_{7,1}\)}
+\vfill
+\begin{SemiVerbatim}[\small]{.9}
+{\color{comment}\% grounding of
+\% reach(Y) :- {n(reach(X))}, a(path(X,Y)).}
+
+{\color{comment}\% Step 1 with N = A from previous step (reach(a)\({}\in{}\)A)}
+\alert{reach(b)} :- \only<1>{n(}\alert{reach(a)}\only<1>{)}, \only<1>{a(}path(a,b)\only<1>{)}.
+\alert{reach(c)} :- \only<1>{n(}\alert{reach(a)}\only<1>{)}, \only<1>{a(}path(a,c)\only<1>{)}.
+
+{\color{comment}\% Step 2 with N = \{ reach(b), reach(c) \}}
+reach(c) :- \only<1>{n(}\alert{reach(b)}\only<1>{)}, \only<1>{a(}path(b,c)\only<1>{)}.
+\alert{reach(d)} :- \only<1>{n(}\alert{reach(b)}\only<1>{)}, \only<1>{a(}path(b,d)\only<1>{)}.
+reach(a) :- \only<1>{n(}\alert{reach(c)}\only<1>{)}, \only<1>{a(}path(c,a)\only<1>{)}.
+\alert{reach(d)} :- \only<1>{n(}\alert{reach(c)}\only<1>{)}, \only<1>{a(}path(c,d)\only<1>{)}.
+
+{\color{comment}\% Step 3 with N = \{ reach(d) \}}
+reach(a) :- \only<1>{n(}\alert{reach(d)}\only<1>{)}, \only<1>{a(}path(d,a)\only<1>{)}.
+
+\only<2>{\color{comment}\% \alert{without} n/1 and a/1 of course}
+\end{SemiVerbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Example: Nonlinear Programs}
+\vfill
+\begin{SemiVerbatim}{.9}
+trans(U,V) :- edge(U,V).
+{\only<2>{\color{comment}\% }trans(U,W) :- \alert<1>{trans(U,V)}, \alert<1>{trans(V,W)}.}
+\only<2>{{{\color{comment}\% better written as:}}}
+\only<2>{trans(U,W) :- \alert{trans(U,V)}, edge(V,W).}
+
+{\color{comment}\% prepared Component 1:}
+trans(U,V) :- n(edge(U,V)).
+
+{\color{comment}\% prepared Component 2:}
+\only<1>{trans(U,W) :- n(trans(U,V)), a(trans(V,W)).}\only<2>{trans(U,W) :- n(trans(U,V)), a(edge(V,W)).}
+\visible<1>{trans(U,W) :- o(trans(U,V)), n(trans(V,W)).}
+\end{SemiVerbatim}
+\end{frame}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../main"
+%%% End:

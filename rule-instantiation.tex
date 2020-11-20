@@ -1,0 +1,76 @@
+
+\section{Rule Instantiation}
+
+\begin{frame}{Rule Instantiation}
+  \vfill
+  \begin{itemize}
+    \item the following slides show how to ground individual rules
+    \item I am probably not going to show them
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Safe Body Order}
+  \vfill
+  \begin{itemize}
+    \item given safe rule \(r\), the tuple \((b_1, \dots, b_n)\) is a \alert{safe body order} if
+      \begin{itemize}
+        \item \(\{ b_1 ,\dots , b_n \} = \Body(r) \)
+        \item the body \(\{b_1, \dots, b_i\}\) is safe for each \(i\)
+      \end{itemize}
+      \pause
+    \item for \alert{example} given rule \texttt{:- node(X), not reach(X).}
+      \begin{itemize}
+        \item \((\texttt{node(X)}, \texttt{not reach(X)})\) is a safe body order
+        \item \((\texttt{not reach(X)}, \texttt{node(X)})\) is not a safe body order
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Matching Body Literals}
+    \begin{itemize}
+      \item \(\Match_{F,D}(\sigma,b)\) is the set of \alert{all matches for literal} \(b\)
+        \begin{itemize}
+          \item \(\sigma\) is a substitution
+          \item \(F\) are facts (set of ground atoms)
+          \item \(D\) is the domain (set of ground atoms)
+          \item \(\sigma' \in \Match_{F,D}(\sigma,b)\) if
+            \begin{itemize}
+              \item \(\sigma \subseteq \sigma'\) and \(\Vars(b) \subseteq \Vars(\sigma') \subseteq \Vars(b) \cup \Vars(\sigma)\),
+              \item \(b\sigma'\) holds if \(b\) is a comparison literal,
+              \item \(b\sigma' \in D\) if \(b\) is an atom, and
+              \item \(a\sigma' \not\in F\) if \(b\) is a symbolic literal of form \(\texttt{not}\ a\)
+            \end{itemize}
+        \end{itemize}
+      \pause
+      \item for \alert{example} given body:  \(\texttt{p(X)},\texttt{q(X,Y)},\texttt{not r(Y)}\)
+        \begin{itemize}
+          \item \(F = \{r(3)\}\) and \(D = \{p(1), q(1,2), q(1,3), r(3)\}\)
+          \item \(\Match_{F,D}(\emptyset, \texttt{p(X)}) = \{ \{ X \mapsto 1 \} \}\)
+          \item \(\Match_{F,D}(\{X \mapsto 1\}, \texttt{q(X,Y)}) = \{ \{ X \mapsto 1, Y \mapsto 2 \}, \{ X \mapsto 1, Y \mapsto 3 \} \}\)
+          \item \(\Match_{F,D}(\{X \mapsto 1, Y \mapsto 2 \}, \texttt{not r(Y)}) = \{ \{ X \mapsto 1, Y \mapsto 2 \} \}\)
+          \item \(\Match_{F,D}(\{X \mapsto 1, Y \mapsto 3 \}, \texttt{not r(Y)}) = \emptyset\)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Rule Grounding by Backtracking}
+    \EmphAlgo{1}{
+      \Fn{\(\GroundBacktrack_{r,R,D}(\sigma, F, (b_1,\dots,b_n))\)}{
+        \eIf{\(n=0\)}{
+          \(\Let~H = \Head(r\sigma)\)\;
+          \(\phantom{\Let~}B = \pbody{r\sigma} \setminus F \cup {}\)\;
+          \(\phantom{\Let~B = {}} \{ \texttt{not }a\sigma \mid a \in \nbody{r} \setminus R, a \in D \} \cup {}\)\;
+          \(\phantom{\Let~B = {}} \{ \texttt{not }a\sigma \mid a \in \nbody{r} \cap R \}\)\;
+          \lIf{\(B = \emptyset\)}{ \(F \leftarrow F \cup H\) }
+          \Return{\((\{ H \texttt{ :- } B \mid \neglits{B} \cap F = \emptyset, H \cap F = \emptyset\}, F)\)}\;
+% \nbody{r\sigma} \cap F = \emptyset, H \cap F = \emptyset\}, F)\)}\;
+        }{
+          \(G \leftarrow \emptyset\)\;
+          \ForEach{\(\sigma' \in \Match_{F,D}(\sigma,b_1)\)}{
+            \((G,F) \leftarrow (G,F) \sqcup \GroundBacktrack_{r,R,D}(\sigma', F, (b_2,\dots,b_n))\)\;
+          }
+          \Return{\((G,F)\)}\;
+        }
+      }
+    }
+\end{frame}

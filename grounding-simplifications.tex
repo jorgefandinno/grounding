@@ -1,0 +1,96 @@
+\section{On-the-fly Simplifications}
+
+\begin{frame}{Propagation of Facts}
+  \vfill
+  \begin{itemize}
+    \item simplifications are performed \alert{on-the-fly}\\
+      (rules are printed immediately but not stored in \Gringo)
+    \item maintain a set of \alert{fact atoms}
+    \item remove facts from positive body
+    \item discard rules with negative literals over a fact
+    \item discard rules whenever the head is a fact
+    \item gather new facts whenever a rule body is empty
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Example: Propagation of Facts}
+  \vfill
+  \begin{SemiVerbatim}{.9}
+...
+path(a,b) :- not omit(a,b)\only<1>{, \alert{edge(a,b)}}.
+...
+reach(a)\only<1>{ :- \alert{start(a)}}. {\only<2->{\color{comment}\% reach(a) is added as fact}}
+\visible<3->{
+...
+
+\only<4>{\sout}{{:- node(a), not \alert{reach(a)}}.} {\only<4->{\color{comment}\% rule is discarded}}
+...}
+\end{SemiVerbatim}
+\end{frame}
+
+\begin{frame}{\mbox{Propagation of Negative Literals}}
+  \vfill
+  \begin{itemize}
+    \item \alert{non-recursive negative literals} not in the current base \(A\) can be removed from rule bodies
+    \item \alert{stratified} logic programs are \alert{completely evaluated} during grounding
+    \item consider the instance where node \texttt{d} is not reachable
+  \end{itemize}
+  \hspace{1em}
+  \begin{center}
+    \Graph[draw=none]
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{\mbox{Example: Propagation of Negative Literals}}
+  \vspace{.1cm}
+  \begin{columns}
+    \begin{column}{0.45\textwidth}
+    \begin{minipage}{.4\textwidth}
+      \begin{semiverbatim}
+path(a,b) :- not omit(a,b).
+path(a,c) :- not omit(a,c).
+path(b,c) :- not omit(b,c).
+path(c,a) :- not omit(c,a).
+path(d,a) :- not omit(d,a).
+...
+\alert{reach(a)}.
+\alert{reach(b)} :- path(a,b).
+\alert{reach(c)} :- path(a,c).
+\alert{reach(c)} :- path(b,c), reach(b).
+...
+\mbox{{\color{comment}\% reach(X) is not recursive and reach(d)\({}\not\in{}A\)}}
+:- not reach(b).
+:- not reach(c).
+:- \only<1>{not \alert{reach(d)}}. \color{comment}\% \alt<2>{inconsistency detected during grounding}{remove not reach(d) from body}
+      \end{semiverbatim}
+    \end{minipage}
+    \end{column}
+    \begin{column}[t]{0.45\textwidth}
+      \centering
+      \Graph[draw=none]
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Conclusion/Summary}
+  \vfill
+  \begin{itemize}
+    \item grounding algorithms for normal logic programs\\(with integrity constraints)
+    \item language features not covered here
+      \begin{itemize}
+        \item (recursive) aggregates
+        \item conditional literals
+        \item optimization statements
+        \item disjunctions
+        \item arithmetic functions
+        \item syntactic sugar to write more compact encodings
+        \item safety of \(=\) relation (for aggregates and terms)
+        \item python/lua integration
+          \begin{itemize}
+            \item external functions
+            \item control over grounding and solving
+          \end{itemize}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+

@@ -1,0 +1,208 @@
+\begin{frame}{Bottom Up Grounding}
+  \begin{itemize}
+    \item ground \alert{relevant} rules by incrementally extending the Herbrand base
+    \item \(\Ground_{D}(P) = \!\begin{aligned}[t] \{ r \in \Ground(P) \mid {} & \alert{\pbody{r} \subseteq D},\\ & \mbox{all comparison literals}\\ & \mbox{in \(\Body(r)\) are satisfied} \} \end{aligned}\)
+  \end{itemize}
+  \EmphAlgo{0.8}{
+    \Fn{\(\GroundBottomUp(P,D)\)}{
+      \(G \leftarrow \Ground_{D}(P)\)\;
+      \If{\(\Head(G) \not\subseteq D\)}{
+        \Return \(\GroundBottomUp(P,D \alert{\cup \Head(G)})\)\;
+      }
+      \Return \(G\)\;
+    }
+  }
+  \begin{itemize}
+    \item given safe program \(P\) and set of ground facts \(I\) (typically corresponds to encoding and instance), \(P \cup I\) is equivalent to \(\GroundBottomUp(P,\Head(I)) \cup I\)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Example: Bottom Up Grounding Step 1}
+  \vfill
+\begin{SemiVerbatim}[\small]{.9}
+{\color{comment}\% Step 1}
+path(a,b) :- not omit(a,b), \alert{edge(a,b)}.
+          \(\vdots\) {\color{comment}\% 7 rules total}
+path(d,a) :- not omit(d,a), \alert{edge(d,a)}.
+
+omit(a,b) :- not path(a,b), \alert{edge(a,b)}.
+          \(\vdots\) {\color{comment}\% 7 rules total}
+omit(d,a) :- not path(d,a), \alert{edge(d,a)}.
+
+:- \alert{node(a)}, not on_path(a).  :- \alert{node(b)}, not on_path(b).
+:- \alert{node(c)}, not on_path(c).  :- \alert{node(d)}, not on_path(d).
+
+:- \alert{node(a)}, not reach(a).  :- \alert{node(b)}, not reach(b).
+:- \alert{node(c)}, not reach(c).  :- \alert{node(d)}, not reach(d).
+
+reach(a) :- \alert{start(a)}.
+\end{SemiVerbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Example: Bottom Up Grounding Step 2}
+  \vfill
+\begin{SemiVerbatim}[\small]{.9}
+{\color{comment}\% Step 2 \alert{and} rules of Step 1}
+:- \alert{path(a,c)}, \alert{path(b,c)}, a < b.
+:- \alert{path(b,d)}, \alert{path(c,d)}, b < c.
+:- \alert{path(c,a)}, \alert{path(d,a)}, c < d.
+
+:- \alert{path(a,b)}, \alert{path(a,c)}, b < c.
+:- \alert{path(c,a)}, \alert{path(c,d)}, a < d.
+:- \alert{path(b,c)}, \alert{path(b,d)}, c < d.
+
+on_path(a) :- \alert{path(a,b)}, \alert{path(c,a)}.
+           \(\vdots\) {\color{comment}\% 12 rules total}
+on_path(d) :- \alert{path(d,a)}, \alert{path(c,d)}.
+
+reach(b) :- \alert{reach(a)}, \alert{path(a,b)}.
+reach(c) :- \alert{reach(a)}, \alert{path(a,c)}.
+\end{SemiVerbatim}
+\end{frame}
+
+\begin{frame}[fragile]{\mbox{Example: Bottom Up Grounding Step 3 and 4}}
+  \vfill
+\begin{SemiVerbatim}{.9}
+{\color{comment}\% Step 3 \alert{and} rules of Step 2}
+reach(c) :- \alert{reach(b)}, path(b,c).
+reach(d) :- \alert{reach(b)}, path(b,d).
+reach(a) :- \alert{reach(c)}, path(c,a).
+reach(d) :- \alert{reach(c)}, path(c,d).
+
+{\color{comment}\% Step 4 \alert{and} rules of Step 3}
+reach(a) :- \alert{reach(d)}, path(d,a).
+\end{SemiVerbatim}
+\end{frame}
+
+\begin{frame}{Properties of Bottom Up Grounding}
+  \vfill
+  \begin{itemize}
+    \item grounds only \alert{relevant} rules
+      \begin{itemize}
+        \item each positive body literal has a non-cyclic derivation \\
+              (ignoring negative literals)
+      \end{itemize}
+    \item \alert{regrounds} rules from previous steps
+  \end{itemize}
+  \EmphAlgo{0.8}{
+    \Fn{\(\GroundBottomUp(P,D)\)}{
+      \(G \leftarrow \Ground_{D}(P)\)\;
+      \If{\(\Head(G) \not\subseteq D\)}{
+        \Return \(\GroundBottomUp(P,D \alert{\cup \Head(G)})\)\;
+      }
+      \Return \(G\)\;
+    }
+  }
+  \begin{itemize}
+    \item does not perform \alert{simplifications}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Improving Bottom Up Grounding}
+  \vfill
+  \begin{itemize}
+    \item use dependencies to \alert{focus} grounding
+      \begin{itemize}
+        \item begin with partial Herbrand base given by facts
+        \item use rule dependency graph of program to obtain \alert{components} that can be \alert{grounded successively}
+      \end{itemize}
+    \item adapt \alert{semi-naive evaluation} put forward in the database field
+      \begin{itemize}
+        \item avoids redundancies when grounding
+      \end{itemize}
+    \item perform \alert{simplifications} during grounding
+      \begin{itemize}
+        \item remove literals from rule bodies if possible
+        \item omit rules if body cannot be satisfied
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Program Dependencies}
+  \vfill
+  \begin{itemize}
+    \item \alert{dependency graph} of program \(P\)
+      \begin{itemize}
+        \item rule \(r_2\) \alert{depends} on rule \(r_1\)\\ if \(b\in\pbody{r_2}\cup\nbody{r_2}\) unifies with \(h\in\Head(r_1)\)
+        \item \(G_P=(P,E)\) where \(E=\{ (r_1,r_2) \mid r_2 \mbox{ depends on } r_1 \}\)
+      \end{itemize}
+    \item \alert{positive dependency graph} of program \(P\)
+      \begin{itemize}
+        \item rule \(r_2\) \alert{positively depends} on rule \(r_1\)\\ if \(b\in\pbody{r_2}\) unifies with \(h\in\Head(r_1)\)
+        \item \(G^+_P=(P,E)\) where \(E=\{ (r_1,r_2) \mid r_2 \mbox{ positively depends on } r_1 \}\)
+      \end{itemize}
+    \item let \(L_P = (C_{1,1},\dots,C_{1,m_1},\dots,C_{n,1},\dots,C_{n,m_n})\) where
+      \begin{itemize}
+        \item \((C_1,\dots,C_n)\) is a topological ordering of \(G_P\)
+        \item \((C_{i,1},\dots,C_{i,m_i})\) is a topological ordering of each \(G^+_{C_i}\)
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\mbox{Example: Dependencies}}
+  \begin{center}
+  \DepGraph
+  \end{center}
+\end{frame}
+
+\begin{frame}{Grounding With Dependencies}
+  \vfill
+  \EmphAlgo{.7}{
+    \Fn{\(\GroundWithDependencies(P,D)\)}{
+      \(G \leftarrow \emptyset\)\;
+      \ForEach{\alert{\(C\) \In \(L_P\)}}{
+        \(G' \leftarrow \GroundBottomUp(C,D)\)\;
+        \((G,D) \leftarrow (G \cup G', D \cup \Head(G'))\)\;
+      }
+      \Return \(G\)\;
+    }
+  }
+  \begin{itemize}
+    \item given safe program \(P\) and set of facts \(I\), \(P \cup I\) is equivalent to \(\GroundWithDependencies(P,\Head(I)) \cup I\)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Example: Grounding with Dependencies}
+\begin{SemiVerbatim}{.9}
+{\color{comment}\% Component\Sub{1,1}}
+omit(a,b) :- not path(a,b), \alert{edge(a,b)}.
+          \(\vdots\) {\color{comment}\% 7 rules total}
+omit(d,a) :- not path(d,a), \alert{edge(d,a)}.
+
+{\color{comment}\% Component\Sub{1,2}}
+path(a,b) :- not omit(a,b), \alert{edge(a,b)}.
+          \(\vdots\) {\color{comment}\% 7 rules total}
+path(d,a) :- not omit(d,a), \alert{edge(d,a)}.
+
+...
+\end{SemiVerbatim}
+\vspace{-.8cm}
+\begin{itemize}
+  \item no regrounding if there is no positive recursion in a component
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{\mbox{Example: Grounding Component\(_{7,1}\)}}
+\begin{SemiVerbatim}{.9}
+{\color{comment}\% Step 1}
+reach(b) :- \alert{reach(a)}, \alert{path(a,b)}.
+reach(c) :- \alert{reach(a)}, \alert{path(a,c)}.
+
+{\color{comment}\% Step 2 \alert{and} rules of Step 1}
+reach(c) :- \alert{reach(b)}, path(b,c).
+reach(d) :- \alert{reach(b)}, path(b,d).
+reach(a) :- \alert{reach(c)}, path(c,a).
+reach(d) :- \alert{reach(c)}, path(c,d).
+
+{\color{comment}\% Step 3 \alert{and} rules of Step 2}
+reach(a) :- \alert{reach(d)}, path(d,a).
+
+{\color{comment}\% less regrounding but still...}
+\end{SemiVerbatim}
+\end{frame}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../main"
+%%% End:
