@@ -1,6 +1,4 @@
-
-\section{Rule Instantiation}
-
+% ----------------------------------------------------------------------
 \begin{frame}{Rule Instantiation}
   \vfill
   \begin{itemize}
@@ -28,14 +26,14 @@
 
 \begin{frame}{Matching Body Literals}
     \begin{itemize}
-      \item \(\Match_{F,D}(\sigma,b)\) is the set of \alert{all matches for literal} \(b\)
+      \item \(\match{\sigma,b}{F,D}\) is the set of \alert{all matches for literal} \(b\)
         \begin{itemize}
           \item \(\sigma\) is a substitution
           \item \(F\) are facts (set of ground atoms)
           \item \(D\) is the domain (set of ground atoms)
-          \item \(\sigma' \in \Match_{F,D}(\sigma,b)\) if
+          \item \(\sigma' \in \match{\sigma,b}{F,D}\) if
             \begin{itemize}
-              \item \(\sigma \subseteq \sigma'\) and \(\Vars(b) \subseteq \Vars(\sigma') \subseteq \Vars(b) \cup \Vars(\sigma)\),
+              \item \(\sigma \subseteq \sigma'\) and \(\vars{b} \subseteq \vars{\sigma'} \subseteq \vars{b} \cup \vars{\sigma}\),
               \item \(b\sigma'\) holds if \(b\) is a comparison literal,
               \item \(b\sigma' \in D\) if \(b\) is an atom, and
               \item \(a\sigma' \not\in F\) if \(b\) is a symbolic literal of form \(\texttt{not}\ a\)
@@ -45,10 +43,10 @@
       \item for \alert{example} given body:  \(\texttt{p(X)},\texttt{q(X,Y)},\texttt{not r(Y)}\)
         \begin{itemize}
           \item \(F = \{r(3)\}\) and \(D = \{p(1), q(1,2), q(1,3), r(3)\}\)
-          \item \(\Match_{F,D}(\emptyset, \texttt{p(X)}) = \{ \{ X \mapsto 1 \} \}\)
-          \item \(\Match_{F,D}(\{X \mapsto 1\}, \texttt{q(X,Y)}) = \{ \{ X \mapsto 1, Y \mapsto 2 \}, \{ X \mapsto 1, Y \mapsto 3 \} \}\)
-          \item \(\Match_{F,D}(\{X \mapsto 1, Y \mapsto 2 \}, \texttt{not r(Y)}) = \{ \{ X \mapsto 1, Y \mapsto 2 \} \}\)
-          \item \(\Match_{F,D}(\{X \mapsto 1, Y \mapsto 3 \}, \texttt{not r(Y)}) = \emptyset\)
+          \item \(\match{\emptyset, \texttt{p(X)}}{F,D} = \{ \{ X \mapsto 1 \} \}\)
+          \item \(\match{\{X \mapsto 1\}, \texttt{q(X,Y)}}{F,D} = \{ \{ X \mapsto 1, Y \mapsto 2 \}, \{ X \mapsto 1, Y \mapsto 3 \} \}\)
+          \item \(\match{\{X \mapsto 1, Y \mapsto 2 \}, \texttt{not r(Y)}}{F,D} = \{ \{ X \mapsto 1, Y \mapsto 2 \} \}\)
+          \item \(\match{\{X \mapsto 1, Y \mapsto 3 \}, \texttt{not r(Y)}}{F,D} = \emptyset\)
         \end{itemize}
     \end{itemize}
 \end{frame}
@@ -66,7 +64,7 @@
 % \nbody{r\sigma} \cap F = \emptyset, H \cap F = \emptyset\}, F)\)}\;
         }{
           \(G \leftarrow \emptyset\)\;
-          \ForEach{\(\sigma' \in \Match_{F,D}(\sigma,b_1)\)}{
+          \ForEach{\(\sigma' \in \match{\sigma,b_1}{F,D}\)}{
             \((G,F) \leftarrow (G,F) \sqcup \GroundBacktrack_{r,R,D}(\sigma', F, (b_2,\dots,b_n))\)\;
           }
           \Return{\((G,F)\)}\;
@@ -74,3 +72,9 @@
       }
     }
 \end{frame}
+% ----------------------------------------------------------------------
+%
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../main"
+%%% End:
