@@ -100,7 +100,7 @@ reach(Y) :- reach(X), path(X,Y).
   \medskip
   \begin{columns}
     \begin{column}{0.6\textwidth}
-      \begin{minipage}{0.6\textwidth}
+      \begin{minipage}{0.6\textwidth}\small
       \begin{semiverbatim}
 {\color{comment}\% path(X,Y) :- not omit(X,Y), edge(X,Y).}
 path(a,a) :- not omit(a,a), \alert{edge(a,a)}.
@@ -127,7 +127,7 @@ path(d,d) :- not omit(d,d), \alert{edge(d,d).}
   \medskip
   \begin{columns}
     \begin{column}{0.6\textwidth}
-      \begin{minipage}{0.6\textwidth}
+      \begin{minipage}{0.6\textwidth}\small
       \begin{semiverbatim}
 {\color{comment}\% :- path(X,Y), path(X',Y), X < X'.}
 :- \alert{path(a,a)}, \alert{path(a,a)}, \alert{a < a}.
