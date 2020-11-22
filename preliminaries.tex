@@ -1,5 +1,5 @@
 % ----------------------------------------------------------------------
-\begin{frame}[fragile]{Hamiltonian cycle}{Instance}
+\begin{frame}[fragile,shrink]{Hamiltonian cycle}{Instance}
   \vfill
   \begin{columns}
     \begin{column}{0.4\textwidth}
@@ -27,7 +27,7 @@ start(a).
   \end{columns}
 \end{frame}
 % ----------------------------------------------------------------------
-\begin{frame}[fragile]{Hamiltonian cycle}{Encoding}
+\begin{frame}[fragile,shrink]{Hamiltonian cycle}{Encoding}
   \vfill
 \begin{SemiVerbatim}[\small]{.9}
 {\color{comment}\% generate path}
@@ -77,7 +77,7 @@ reach(Y) :- reach(X), path(X,Y).
   \end{itemize}
 \end{frame}
 % ----------------------------------------------------------------------
-\begin{frame}[fragile]{Size of grounding}
+\begin{frame}[fragile,shrink]{Size of grounding}{Hamiltonian cycle}
   \begin{SemiVerbatim}{.9}
 {\color{comment}\% Herbrand Universe: \{a,b,c,d\}}
 12 facts from instance
@@ -96,8 +96,8 @@ reach(Y) :- reach(X), path(X,Y).
   \end{SemiVerbatim}
 \end{frame}
 % ----------------------------------------------------------------------
-\begin{frame}[fragile]{Unnecessary rules, I}
-  \vfill
+\begin{frame}[fragile,shrink]{Unnecessary rules, I}{Hamiltonian cycle}
+  \medskip
   \begin{columns}
     \begin{column}{0.6\textwidth}
       \begin{minipage}{0.6\textwidth}
@@ -123,8 +123,8 @@ path(d,d) :- not omit(d,d), \alert{edge(d,d).}
   \end{columns}
 \end{frame}
 % ----------------------------------------------------------------------
-\begin{frame}[fragile]{Unnecessary rules, II}
-  \vfill
+\begin{frame}[fragile,shrink]{Unnecessary rules, II}{Hamiltonian cycle}
+  \medskip
   \begin{columns}
     \begin{column}{0.6\textwidth}
       \begin{minipage}{0.6\textwidth}
