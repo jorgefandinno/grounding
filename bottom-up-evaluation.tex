@@ -26,8 +26,8 @@
     \(P \cup I\) is equivalent to \(\GroundBottomUp(P,\Head{I}) \cup I\)
   \end{itemize}
 \end{frame}
-
-\begin{frame}[fragile]{Example: Bottom Up Grounding Step 1}
+% ----------------------------------------------------------------------
+\begin{frame}[fragile,shrink]{Bottom up grounding, step 1}{Hamiltonian cycle}
   \vfill
 \begin{SemiVerbatim}[\small]{.9}
 {\color{comment}\% Step 1}
@@ -48,8 +48,8 @@ omit(d,a) :- not path(d,a), \alert{edge(d,a)}.
 reach(a) :- \alert{start(a)}.
 \end{SemiVerbatim}
 \end{frame}
-
-\begin{frame}[fragile]{Example: Bottom Up Grounding Step 2}
+% ----------------------------------------------------------------------
+\begin{frame}[fragile,shrink]{Bottom up grounding, step 2}{Hamiltonian cycle}
   \vfill
 \begin{SemiVerbatim}[\small]{.9}
 {\color{comment}\% Step 2 \alert{and} rules of Step 1}
@@ -69,8 +69,8 @@ reach(b) :- \alert{reach(a)}, \alert{path(a,b)}.
 reach(c) :- \alert{reach(a)}, \alert{path(a,c)}.
 \end{SemiVerbatim}
 \end{frame}
-
-\begin{frame}[fragile]{\mbox{Example: Bottom Up Grounding Step 3 and 4}}
+% ----------------------------------------------------------------------
+\begin{frame}[fragile,shrink]{Bottom up grounding, step 3 and 4}{Hamiltonian cycle}
   \vfill
 \begin{SemiVerbatim}{.9}
 {\color{comment}\% Step 3 \alert{and} rules of Step 2}
@@ -207,8 +207,8 @@ path(d,a) :- not omit(d,a), \alert{edge(d,a)}.
   \item no regrounding if there is no positive recursion in a component
 \end{itemize}
 \end{frame}
-
-\begin{frame}[fragile]{\mbox{Example: Grounding Component\(_{7,1}\)}}
+% ----------------------------------------------------------------------
+\begin{frame}[fragile,shrink]{Grounding Component\(_{7,1}\)}{Hamiltonian cycle}
 \begin{SemiVerbatim}{.9}
 {\color{comment}\% Step 1}
 reach(b) :- \alert{reach(a)}, \alert{path(a,b)}.
