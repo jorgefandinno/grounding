@@ -51,27 +51,26 @@ reach(Y) :- reach(X), path(X,Y).
 % ----------------------------------------------------------------------
 \begin{frame}{Essential concepts}
   \begin{itemize}
-    \item Safety
-      \begin{itemize}
-        \item each variable has to occur in a positive body element
-        \item consider: \texttt{p(X) :- not q(X).}
+    \item \structure{Safety}
+      \begin{itemize}\normalsize
+        \item each variable must occur in a positive body literal
       \end{itemize}
-    \item Herbrand universe
-      \begin{itemize}
+    \item \structure{Herbrand universe}
+      \begin{itemize}\normalsize
         \item
-          \alert{all constants} in program and\\
-          \alert{all functions} over function symbols in program
+          all constants in program and\\
+          all functions over function symbols in program
       \end{itemize}
-    \item Herbrand base
-      \begin{itemize}
-        \item \alert{all atoms} over predicates in program\\ with terms from Herbrand universe
+    \item \structure{Herbrand base}
+      \begin{itemize}\normalsize
+        \item all atoms over predicates in program\\ with terms from Herbrand universe
       \end{itemize}
-    \item Instance of a rule
-      \begin{itemize}
+    \item \structure{Ground instance}  of a rule
+      \begin{itemize}\normalsize
         \item all variables replaced with elements from Herbrand universe
       \end{itemize}
-    \item Grounding of a program
-      \begin{itemize}
+    \item \structure{Grounding instantiation} of a logic program
+      \begin{itemize}\normalsize
         \item \(\ground{P}\) is the union of all instances of % all
               rules in \(P\)
       \end{itemize}
