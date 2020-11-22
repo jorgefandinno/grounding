@@ -12,7 +12,7 @@
   \begin{itemize}
     \item given safe rule \(r\), the tuple \((b_1, \dots, b_n)\) is a \alert{safe body order} if
       \begin{itemize}
-        \item \(\{ b_1 ,\dots , b_n \} = \Body(r) \)
+        \item \(\{ b_1 ,\dots , b_n \} = \body{r} \)
         \item the body \(\{b_1, \dots, b_i\}\) is safe for each \(i\)
       \end{itemize}
       \pause
@@ -55,7 +55,7 @@
     \EmphAlgo{1}{
       \Fn{\(\GroundBacktrack_{r,R,D}(\sigma, F, (b_1,\dots,b_n))\)}{
         \eIf{\(n=0\)}{
-          \(\Let~H = \Head(r\sigma)\)\;
+          \(\Let~H = \head{r\sigma}\)\;
           \(\phantom{\Let~}B = \pbody{r\sigma} \setminus F \cup {}\)\;
           \(\phantom{\Let~B = {}} \{ \texttt{not }a\sigma \mid a \in \nbody{r} \setminus R, a \in D \} \cup {}\)\;
           \(\phantom{\Let~B = {}} \{ \texttt{not }a\sigma \mid a \in \nbody{r} \cap R \}\)\;
