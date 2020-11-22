@@ -1,5 +1,5 @@
 % ----------------------------------------------------------------------
-\begin{frame}[fragile]{Hamiltonian Cycle Instance}
+\begin{frame}[fragile]{Hamiltonian cycle}{Instance}
   \vfill
   \begin{columns}
     \begin{column}{0.4\textwidth}
@@ -26,8 +26,8 @@ start(a).
     \end{column}
   \end{columns}
 \end{frame}
-
-\begin{frame}[fragile]{Hamiltonian Cycle Encoding}
+% ----------------------------------------------------------------------
+\begin{frame}[fragile]{Hamiltonian cycle}{Encoding}
   \vfill
 \begin{SemiVerbatim}[\small]{.9}
 {\color{comment}\% generate path}
@@ -48,8 +48,8 @@ reach(Y) :- reach(X), path(X,Y).
 :- node(X), not reach(X).
 \end{SemiVerbatim}
 \end{frame}
-
-\begin{frame}{Grounding}
+% ----------------------------------------------------------------------
+\begin{frame}{Essential concepts}
   \begin{itemize}
     \item Safety
       \begin{itemize}
@@ -77,8 +77,8 @@ reach(Y) :- reach(X), path(X,Y).
       \end{itemize}
   \end{itemize}
 \end{frame}
-
-\begin{frame}[fragile]{Example: Size of Grounding}
+% ----------------------------------------------------------------------
+\begin{frame}[fragile]{Size of grounding}
   \begin{SemiVerbatim}{.9}
 {\color{comment}\% Herbrand Universe: \{a,b,c,d\}}
 12 facts from instance
@@ -96,8 +96,8 @@ reach(Y) :- reach(X), path(X,Y).
 4 rules + 4 rules + 4 rules
   \end{SemiVerbatim}
 \end{frame}
-
-\begin{frame}[fragile]{Example: Unnecessary Rules I}
+% ----------------------------------------------------------------------
+\begin{frame}[fragile]{Unnecessary rules, I}
   \vfill
   \begin{columns}
     \begin{column}{0.6\textwidth}
@@ -123,8 +123,8 @@ path(d,d) :- not omit(d,d), \alert{edge(d,d).}
     \end{column}
   \end{columns}
 \end{frame}
-
-\begin{frame}[fragile]{Example: Unnecessary Rules II}
+% ----------------------------------------------------------------------
+\begin{frame}[fragile]{Unnecessary rules, II}
   \vfill
   \begin{columns}
     \begin{column}{0.6\textwidth}
