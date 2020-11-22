@@ -1,19 +1,29 @@
-\begin{frame}{Bottom Up Grounding}
+% ----------------------------------------------------------------------
+\begin{frame}{Bottom up grounding}
   \begin{itemize}
-    \item ground \alert{relevant} rules by incrementally extending the Herbrand base
-    \item \(\cground{P}{D} = \!\begin{aligned}[t] \{ r \in \ground{P} \mid {} & \alert{\pbody{r} \subseteq D},\\ & \mbox{all comparison literals}\\ & \mbox{in \(\Body(r)\) are satisfied} \} \end{aligned}\)
-  \end{itemize}
-  \EmphAlgo{0.8}{
-    \Fn{\(\GroundBottomUp(P,D)\)}{
-      \(G \leftarrow \cground{P}{D}\)\;
-      \If{\(\Head(G) \not\subseteq D\)}{
-        \Return \(\GroundBottomUp(P,D \alert{\cup \Head(G)})\)\;
+  \item<1-> \structure{Idee} \
+    Ground \alert{relevant} rules by gradually extending the Herbrand base
+  \item<1-> \structure{Algorithm} \
+    \begin{align*}
+      \cground{P}{D} & = \{ r \in \ground{P} \mid \alert{\pbody{r} \subseteq D}\only<2>{,\\
+                     &\qquad \text{ all comparison literals in \(\body{r}\) are satisfied}} \}
+    \end{align*}
+  \item<only@4->[]
+
+    \EmphAlgo{0.8}{
+      \Fn{\(\GroundBottomUp(P,D)\)}{
+        \(G \leftarrow \cground{P}{D}\)\;
+        \If{\(\Head{G} \not\subseteq D\)}{
+          \Return \(\GroundBottomUp(P,D \alert{\cup \Head{G}})\)\;
+        }
+        \Return \(G\)\;
       }
-      \Return \(G\)\;
     }
-  }
-  \begin{itemize}
-    \item given safe program \(P\) and set of ground facts \(I\) (typically corresponds to encoding and instance), \(P \cup I\) is equivalent to \(\GroundBottomUp(P,\Head(I)) \cup I\)
+
+    \medskip
+  \item<only@5-> \structure{Property} \ Given safe normal program \(P\) and set of ground facts \(I\),
+
+    \(P \cup I\) is equivalent to \(\GroundBottomUp(P,\Head{I}) \cup I\)
   \end{itemize}
 \end{frame}
 
@@ -73,103 +83,119 @@ reach(d) :- \alert{reach(c)}, path(c,d).
 reach(a) :- \alert{reach(d)}, path(d,a).
 \end{SemiVerbatim}
 \end{frame}
-
-\begin{frame}{Properties of Bottom Up Grounding}
-  \vfill
+% ----------------------------------------------------------------------
+\begin{frame}{Properties of bottom up grounding}
   \begin{itemize}
-    \item grounds only \alert{relevant} rules
-      \begin{itemize}
-        \item each positive body literal has a non-cyclic derivation \\
-              (ignoring negative literals)
-      \end{itemize}
-    \item \alert{regrounds} rules from previous steps
-  \end{itemize}
+  \item grounds only \alert{relevant} rules
+    \begin{itemize}\normalsize
+    \item each positive body literal has a non-cyclic derivation \\
+      (ignoring negative literals)
+    \end{itemize}
+    \smallskip
+  \item \alert{re-grounds} rules from previous steps
+
   \EmphAlgo{0.8}{
     \Fn{\(\GroundBottomUp(P,D)\)}{
       \(G \leftarrow \cground{P}{D}\)\;
-      \If{\(\Head(G) \not\subseteq D\)}{
-        \Return \(\GroundBottomUp(P,D \alert{\cup \Head(G)})\)\;
+      \If{\(\Head{G} \not\subseteq D\)}{
+        \Return \(\GroundBottomUp(P,D \alert{\cup \Head{G}})\)\;
       }
       \Return \(G\)\;
     }
   }
-  \begin{itemize}
-    \item does not perform \alert{simplifications}
+
+  \medskip
+  \item performs no \alert{simplifications}
   \end{itemize}
 \end{frame}
-
-\begin{frame}{Improving Bottom Up Grounding}
-  \vfill
+% ----------------------------------------------------------------------
+\begin{frame}{Improving bottom up grounding}
+  \bigskip
   \begin{itemize}
-    \item use dependencies to \alert{focus} grounding
-      \begin{itemize}
-        \item begin with partial Herbrand base given by facts
-        \item use rule dependency graph of program to obtain \alert{components} that can be \alert{grounded successively}
-      \end{itemize}
-    \item adapt \alert{semi-naive evaluation} put forward in the database field
-      \begin{itemize}
-        \item avoids redundancies when grounding
-      \end{itemize}
-    \item perform \alert{simplifications} during grounding
-      \begin{itemize}
-        \item remove literals from rule bodies if possible
-        \item omit rules if body cannot be satisfied
-      \end{itemize}
+  \item use dependencies to \alert{focus} grounding
+    \begin{itemize}\normalsize
+    \item begin with partial Herbrand base given by facts
+    \item use rule dependency graph of program to obtain \alert{components} that can be \alert{grounded successively}
+    \end{itemize}
+    \medskip
+  \item adapt \alert{semi-naive evaluation} put forward in the database field
+    \begin{itemize}\normalsize
+    \item avoids redundancies when grounding
+    \end{itemize}
+    \medskip
+  \item perform \alert{simplifications} during grounding
+    \begin{itemize}\normalsize
+    \item remove literals from rule bodies if possible
+    \item omit rules if body cannot be satisfied
+    \end{itemize}
   \end{itemize}
 \end{frame}
-
-\begin{frame}{Program Dependencies}
-  \vfill
+% ----------------------------------------------------------------------
+\begin{frame}{Program dependencies}
+  \smallskip
   \begin{itemize}
-    \item \alert{dependency graph} of program \(P\)
-      \begin{itemize}
-        \item rule \(r_2\) \alert{depends} on rule \(r_1\)\\ if \(b\in\pbody{r_2}\cup\nbody{r_2}\) unifies with \(h\in\Head(r_1)\)
-        \item \(G_P=(P,E)\) where \(E=\{ (r_1,r_2) \mid r_2 \mbox{ depends on } r_1 \}\)
-      \end{itemize}
-    \item \alert{positive dependency graph} of program \(P\)
-      \begin{itemize}
-        \item rule \(r_2\) \alert{positively depends} on rule \(r_1\)\\ if \(b\in\pbody{r_2}\) unifies with \(h\in\Head(r_1)\)
-        \item \(G^+_P=(P,E)\) where \(E=\{ (r_1,r_2) \mid r_2 \mbox{ positively depends on } r_1 \}\)
-      \end{itemize}
-    \item let \(L_P = (C_{1,1},\dots,C_{1,m_1},\dots,C_{n,1},\dots,C_{n,m_n})\) where
-      \begin{itemize}
-        \item \((C_1,\dots,C_n)\) is a topological ordering of \(G_P\)
-        \item \((C_{i,1},\dots,C_{i,m_i})\) is a topological ordering of each \(G^+_{C_i}\)
-      \end{itemize}
+  \item<1-> \structure{Dependency graph} of program \(P\)
+    \begin{itemize}\normalsize
+    \item rule \(r_2\) \alert{depends} on rule \(r_1\)\\ if \(b\in\pbody{r_2}\cup\nbody{r_2}\) unifies with \(h\in\head{r_1}\)
+      \smallskip
+    \item \(G_P=(P,E)\) where \(E=\{ (r_1,r_2) \mid r_2 \mbox{ depends on } r_1 \}\)
+    \end{itemize}
+    \medskip
+  \item<2-> \structure{Positive dependency graph} of program \(P\)
+    \begin{itemize}\normalsize
+    \item rule \(r_2\) \alert{positively depends} on rule \(r_1\)\\ if \(b\in\pbody{r_2}\) unifies with \(h\in\Head{r_1}\)
+      \smallskip
+    \item \(G^+_P=(P,E)\) where \(E=\{ (r_1,r_2) \mid r_2 \mbox{ positively depends on } r_1 \}\)
+    \end{itemize}
+    \medskip
+  \item<3-> \structure{Topological ordering} \  \(L_P = (C_{1,1},\dots,C_{1,m_1},\dots,C_{n,1},\dots,C_{n,m_n})\)
+    \par
+    where
+    \begin{itemize}\normalsize
+    \item \((C_1,\dots,C_n)\) is a topological ordering of \(G_P\)
+      \smallskip
+    \item \((C_{i,1},\dots,C_{i,m_i})\) is a topological ordering of each \(G^+_{C_i}\)
+    \end{itemize}
   \end{itemize}
 \end{frame}
-
-\begin{frame}{\mbox{Example: Dependencies}}
+% ----------------------------------------------------------------------
+\begin{frame}[shrink]{Dependencies}{Hamiltonian cycle}
   \begin{center}
   \DepGraph
   \end{center}
 \end{frame}
+% ----------------------------------------------------------------------
+\begin{frame}{Grounding with dependencies}
+  \bigskip
+  \begin{itemize}
+  \item []
 
-\begin{frame}{Grounding With Dependencies}
-  \vfill
   \EmphAlgo{.7}{
     \Fn{\(\GroundWithDependencies(P,D)\)}{
       \(G \leftarrow \emptyset\)\;
       \ForEach{\alert{\(C\) \In \(L_P\)}}{
         \(G' \leftarrow \GroundBottomUp(C,D)\)\;
-        \((G,D) \leftarrow (G \cup G', D \cup \Head(G'))\)\;
+        \((G,D) \leftarrow (G \cup G', D \cup \Head{G'})\)\;
       }
       \Return \(G\)\;
     }
   }
-  \begin{itemize}
-    \item given safe program \(P\) and set of facts \(I\), \(P \cup I\) is equivalent to \(\GroundWithDependencies(P,\Head(I)) \cup I\)
+
+  \bigskip
+  \item<2-> \structure{Property} \ Given safe normal program \(P\) and set of facts \(I\),
+
+    \(P \cup I\) is equivalent to \(\GroundWithDependencies(P,\Head{I}) \cup I\)
   \end{itemize}
 \end{frame}
-
-\begin{frame}[fragile]{Example: Grounding with Dependencies}
+% ----------------------------------------------------------------------
+\begin{frame}[fragile,shrink]{Grounding with dependencies}{Hamiltonian cycle}
 \begin{SemiVerbatim}{.9}
-{\color{comment}\% Component\Sub{1,1}}
+{\color{comment}\% Component\(_{1,1}\)}
 omit(a,b) :- not path(a,b), \alert{edge(a,b)}.
           \(\vdots\) {\color{comment}\% 7 rules total}
 omit(d,a) :- not path(d,a), \alert{edge(d,a)}.
 
-{\color{comment}\% Component\Sub{1,2}}
+{\color{comment}\% Component\(_{1,2}\)}
 path(a,b) :- not omit(a,b), \alert{edge(a,b)}.
           \(\vdots\) {\color{comment}\% 7 rules total}
 path(d,a) :- not omit(d,a), \alert{edge(d,a)}.
