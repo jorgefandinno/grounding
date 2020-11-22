@@ -50,6 +50,7 @@ reach(Y) :- reach(X), path(X,Y).
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}{Essential concepts}
+  \smallskip
   \begin{itemize}
     \item \structure{Safety}
       \begin{itemize}\normalsize
@@ -112,8 +113,6 @@ path(d,a) :- not omit(d,a), edge(d,a).
 path(d,b) :- not omit(d,b), \alert{edge(d,b).}
 path(d,c) :- not omit(d,c), \alert{edge(d,d).}
 path(d,d) :- not omit(d,d), \alert{edge(d,d).}
-
-
       \end{semiverbatim}
     \end{minipage}
     \end{column}
