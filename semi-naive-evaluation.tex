@@ -63,26 +63,30 @@ reach(Y) :- \alert{n(reach(X))}, \alert{a(path(X,Y))}.
 ...
 \end{SemiVerbatim}
 \end{frame}
-
-\begin{frame}{Semi-naive Evaluation-based Grounding}
-  \vfill
-  \EmphAlgo{.95}{
-    \Fn{\(\GroundSemiNaive(P,A)\)}{
-      \(G \leftarrow \emptyset\)\;
-      \ForEach{\(C\) \In \(L_P\)}{
-        \((O,N) \leftarrow (\emptyset,A)\)\;
-        \Repeat{\(N=\emptyset\)}{
-          \Let \(D_p = \{ p(a) \mid a \in D \}\) for set \(D\) of atoms\;
-          \(G' \leftarrow \alert{\cground{\text{prepared } C}{O_o \cup N_n \cup A_a}}\)\;
-          \(N \leftarrow \Head{G'} \setminus A\)\;
-          \((G,O,A) \leftarrow (G \cup G', A, N \cup A)\)\;
+% ----------------------------------------------------------------------
+\begin{frame}{Semi-naive evaluation-based grounding}
+  \begin{center}
+    \EmphAlgo{.9}{
+      \Fn{\(\GroundSemiNaive(P,A)\)}{
+        \(G \leftarrow \emptyset\)\;
+        \ForEach{\(C\) \In \(L_P\)}{
+          \((O,N) \leftarrow (\emptyset,A)\)\;
+          \Repeat{\(N=\emptyset\)}{
+            \Let \(D_p = \{ p(a) \mid a \in D \}\) for set \(D\) of atoms\;
+            \(G' \leftarrow \alert{\cground{\text{prepared } C}{O_o \cup N_n \cup A_a}}\)\;
+            \(N \leftarrow \Head{G'} \setminus A\)\;
+            \((G,O,A) \leftarrow (G \cup G', A, N \cup A)\)\;
+          }
         }
+        \Return \(G \text{ with \(o/1\), \(n/1\), \(a/1\) stripped from positive bodies}\)\;
       }
-      \Return \(G \text{ with \(o/1\), \(n/1\), \(a/1\) stripped from positive bodies}\)\;
     }
-  }
+  \end{center}
+  \medskip
   \begin{itemize}
-    \item given safe program \(P\) and set of facts \(I\), \(P \cup I\) is equivalent to \(\GroundSemiNaive(P,\Head{I}) \cup I\)
+  \item<2-> \structure{Property} \ Given safe normal program \(P\) and set of facts \(I\),
+
+    \(P \cup I\) is equivalent to \(\GroundSemiNaive(P,\Head{I}) \cup I\)
   \end{itemize}
 \end{frame}
 % ----------------------------------------------------------------------
