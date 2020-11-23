@@ -2,13 +2,18 @@
 \begin{frame}{Propagation of facts}
   \bigskip
   \begin{itemize}
-    \item simplifications are performed \alert{on-the-fly}\\
+    \item Simplifications are performed \alert{on-the-fly}\\
       (rules are printed immediately but not stored in \gringo)
-    \item maintain a set of \alert{fact atoms}
-    \item remove facts from positive body
-    \item discard rules with negative literals over a fact
-    \item discard rules whenever the head is a fact
-    \item gather new facts whenever a rule body is empty
+    \smallskip
+    \item Maintain a set of \alert{fact atoms}
+    \smallskip
+    \item Remove facts from positive body
+    \smallskip
+    \item Discard rules with negative literals over a fact
+    \smallskip
+    \item Discard rules whenever the head is a fact
+    \smallskip
+    \item Gather new facts whenever a rule body is empty
   \end{itemize}
 \end{frame}
 % ----------------------------------------------------------------------
