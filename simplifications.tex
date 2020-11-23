@@ -35,11 +35,13 @@ reach(a)\only<1>{ :- \alert{start(a)}}. {\only<2->{\color{comment}\% reach(a) is
 \begin{frame}{Propagation of negative literals}
   \bigskip
   \begin{itemize}
-    \item \alert{non-recursive negative literals} not in the current base \(A\) can be removed from rule bodies
-    \item \alert{stratified} logic programs are \alert{completely evaluated} during grounding
-    \item consider the instance where node \texttt{d} is not reachable
+  \item \alert{Non-recursive negative literals} not in the current base can be\\ removed from rule bodies
+    \smallskip
+  \item \alert{Stratified} logic programs are \alert{completely evaluated} during grounding
+    \smallskip
+  \item Consider the instance where node \texttt{d} is not reachable
   \end{itemize}
-  \hspace{1em}
+  \bigskip
   \begin{center}
     \Graph[draw=none]
   \end{center}
