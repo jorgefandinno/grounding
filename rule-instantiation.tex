@@ -1,14 +1,13 @@
 % ----------------------------------------------------------------------
-\begin{frame}{Rule Instantiation}
-  \vfill
+\begin{frame}{Safe body order}
+  \bigskip
   \begin{itemize}
     \item the following slides show how to ground individual rules
     \item I am probably not going to show them
   \end{itemize}
 \end{frame}
-
-\begin{frame}{Safe Body Order}
-  \vfill
+% ----------------------------------------------------------------------
+\begin{frame}{Matching body literals}
   \begin{itemize}
     \item given safe rule \(r\), the tuple \((b_1, \dots, b_n)\) is a \alert{safe body order} if
       \begin{itemize}
@@ -50,8 +49,8 @@
         \end{itemize}
     \end{itemize}
 \end{frame}
-
-\begin{frame}{Rule Grounding by Backtracking}
+% ----------------------------------------------------------------------
+\begin{frame}{Rule grounding by backtracking}
     \EmphAlgo{1}{
       \Fn{\(\GroundBacktrack_{r,R,D}(\sigma, F, (b_1,\dots,b_n))\)}{
         \eIf{\(n=0\)}{
