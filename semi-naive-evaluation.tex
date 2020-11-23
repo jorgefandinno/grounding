@@ -11,16 +11,15 @@
       \end{itemize}
   \end{itemize}
 \end{frame}
-
-\begin{frame}{Example: Recursive Atoms}
-  \vfill
+% ----------------------------------------------------------------------
+\begin{frame}[shrink]{Recursive atoms}{Hamiltonian cycle}
   \begin{center}
     \DepGraph[\alert]
   \end{center}
 \end{frame}
+% ----------------------------------------------------------------------
+\begin{frame}{Preparing components}
 
-\begin{frame}{Preparing Components}
-  \vfill
   \begin{itemize}
     \item the set of \alert{prepared rules} for \(r \in C\) is\\
       \(\arraycolsep=1.4pt
@@ -42,9 +41,9 @@
     \item a \alert{prepared component} is the union of all its prepared rules
   \end{itemize}
 \end{frame}
+% ----------------------------------------------------------------------
+\begin{frame}[fragile]{Preparing components}
 
-\begin{frame}[fragile]{Example: Preparing Components}
-  \vfill
 \begin{SemiVerbatim}{.9}
 {\color{comment}\% prepared Component\(_{1,1}\)}
 omit(X,Y) :- \alert{n(edge(X,Y))}, not path(X,Y).
