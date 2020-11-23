@@ -79,9 +79,9 @@ reach(Y) :- \alert{n(reach(X))}, \alert{a(path(X,Y))}.
     \item given safe program \(P\) and set of facts \(I\), \(P \cup I\) is equivalent to \(\GroundSemiNaive(P,\Head{I}) \cup I\)
   \end{itemize}
 \end{frame}
+% ----------------------------------------------------------------------
+\begin{frame}[fragile]{Grounding component \(C_{7,1}\)}{Hamiltonian cycle}
 
-\begin{frame}[fragile]{Example: Grounding Component\(_{7,1}\)}
-\vfill
 \begin{SemiVerbatim}[\small]{.9}
 {\color{comment}\% grounding of
 \% reach(Y) :- {n(reach(X))}, a(path(X,Y)).}
@@ -102,8 +102,8 @@ reach(a) :- \only<1>{n(}\alert{reach(d)}\only<1>{)}, \only<1>{a(}path(d,a)\only<
 \only<2>{\color{comment}\% \alert{without} n/1 and a/1 of course}
 \end{SemiVerbatim}
 \end{frame}
-
-\begin{frame}[fragile]{Example: Nonlinear Programs}
+% ----------------------------------------------------------------------
+\begin{frame}[fragile]{Nonlinear programs}{Example}
 \vfill
 \begin{SemiVerbatim}{.9}
 trans(U,V) :- edge(U,V).
