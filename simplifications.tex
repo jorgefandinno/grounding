@@ -1,6 +1,6 @@
 % ----------------------------------------------------------------------
-\begin{frame}{Propagation of Facts}
-  \vfill
+\begin{frame}{Propagation of facts}
+  \bigskip
   \begin{itemize}
     \item simplifications are performed \alert{on-the-fly}\\
       (rules are printed immediately but not stored in \gringo)
@@ -11,9 +11,9 @@
     \item gather new facts whenever a rule body is empty
   \end{itemize}
 \end{frame}
-
-\begin{frame}[fragile]{Example: Propagation of Facts}
-  \vfill
+% ----------------------------------------------------------------------
+\begin{frame}[fragile]{Propagation of facts}{Hamiltonian cycle}
+  \bigskip
   \begin{SemiVerbatim}{.9}
 ...
 path(a,b) :- not omit(a,b)\only<1>{, \alert{edge(a,b)}}.
@@ -26,9 +26,9 @@ reach(a)\only<1>{ :- \alert{start(a)}}. {\only<2->{\color{comment}\% reach(a) is
 ...}
 \end{SemiVerbatim}
 \end{frame}
-
-\begin{frame}{\mbox{Propagation of Negative Literals}}
-  \vfill
+% ----------------------------------------------------------------------
+\begin{frame}{Propagation of negative literals}
+  \bigskip
   \begin{itemize}
     \item \alert{non-recursive negative literals} not in the current base \(A\) can be removed from rule bodies
     \item \alert{stratified} logic programs are \alert{completely evaluated} during grounding
@@ -39,9 +39,8 @@ reach(a)\only<1>{ :- \alert{start(a)}}. {\only<2->{\color{comment}\% reach(a) is
     \Graph[draw=none]
   \end{center}
 \end{frame}
-
-\begin{frame}[fragile]{\mbox{Example: Propagation of Negative Literals}}
-  \vspace{.1cm}
+% ----------------------------------------------------------------------
+\begin{frame}[fragile,shrink]{Propagation of negative literals}{Hamiltonian cycle}
   \begin{columns}
     \begin{column}{0.45\textwidth}
     \begin{minipage}{.4\textwidth}
@@ -70,9 +69,9 @@ path(d,a) :- not omit(d,a).
     \end{column}
   \end{columns}
 \end{frame}
-
-\begin{frame}{Conclusion/Summary}
-  \vfill
+% ----------------------------------------------------------------------
+\begin{frame}{Ignored language features}
+  \bigskip
   \begin{itemize}
     \item grounding algorithms for normal logic programs\\(with integrity constraints)
     \item language features not covered here
