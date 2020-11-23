@@ -85,14 +85,15 @@ reach(a) :- \alert{reach(d)}, path(d,a).
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}{Properties of bottom up grounding}
+  \bigskip
   \begin{itemize}
-  \item grounds only \alert{relevant} rules
+  \item Grounds only \alert{relevant} rules
     \begin{itemize}\normalsize
     \item each positive body literal has a non-cyclic derivation \\
       (ignoring negative literals)
     \end{itemize}
     \smallskip
-  \item \alert{re-grounds} rules from previous steps
+  \item \alert{Re-grounds} rules from previous steps
 
   \EmphAlgo{0.8}{
     \Fn{\(\GroundBottomUp(P,D)\)}{
@@ -105,25 +106,25 @@ reach(a) :- \alert{reach(d)}, path(d,a).
   }
 
   \medskip
-  \item performs no \alert{simplifications}
+  \item Performs no \alert{simplifications}
   \end{itemize}
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}{Improving bottom up grounding}
   \bigskip
   \begin{itemize}
-  \item use dependencies to \alert{focus} grounding
+  \item Use dependencies to \alert{focus} grounding
     \begin{itemize}\normalsize
     \item begin with partial Herbrand base given by facts
     \item use rule dependency graph of program to obtain \alert{components} that can be \alert{grounded successively}
     \end{itemize}
     \medskip
-  \item adapt \alert{semi-naive evaluation} put forward in the database field
+  \item Adapt \alert{semi-naive evaluation} put forward in the database field
     \begin{itemize}\normalsize
     \item avoids redundancies when grounding
     \end{itemize}
     \medskip
-  \item perform \alert{simplifications} during grounding
+  \item Perform \alert{simplifications} during grounding
     \begin{itemize}\normalsize
     \item remove literals from rule bodies if possible
     \item omit rules if body cannot be satisfied
@@ -204,11 +205,12 @@ path(d,a) :- not omit(d,a), \alert{edge(d,a)}.
 \end{SemiVerbatim}
 \vspace{-.8cm}
 \begin{itemize}
-  \item no regrounding if there is no positive recursion in a component
+\item<2-> No regrounding if there is no positive recursion in a component
 \end{itemize}
+\smallskip
 \end{frame}
 % ----------------------------------------------------------------------
-\begin{frame}[fragile,shrink]{Grounding Component\(_{7,1}\)}{Hamiltonian cycle}
+\begin{frame}[fragile,shrink]{Grounding component \(C_{7,1}\)}{Hamiltonian cycle}
 \begin{SemiVerbatim}{.9}
 {\color{comment}\% Step 1}
 reach(b) :- \alert{reach(a)}, \alert{path(a,b)}.
