@@ -137,21 +137,27 @@ reach(a) :- \alert{reach(d)}, path(d,a).
   \begin{itemize}
   \item<1-> \structure{Dependency graph} of program \(P\)
     \begin{itemize}\normalsize
-    \item rule \(r_2\) \alert{depends} on rule \(r_1\)\\ if \(b\in\pbody{r_2}\cup\nbody{r_2}\) unifies with \(h\in\head{r_1}\)
+    \item<only@-2> rule \(r_2\) \alert{depends} on rule \(r_1\)
+      \\if \(b\in\pbody{r_2}\cup\nbody{r_2}\) unifies with \(h\in\head{r_1}\)
       \smallskip
-    \item \(G_P=(P,E)\) where \(E=\{ (r_1,r_2) \mid r_2 \mbox{ depends on } r_1 \}\)
+    \item \(G_P=(P,E)\) where \(E=\{ (r_1,r_2) \mid r_2 \text{ depends on } r_1 \}\)
     \end{itemize}
     \medskip
   \item<2-> \structure{Positive dependency graph} of program \(P\)
     \begin{itemize}\normalsize
-    \item rule \(r_2\) \alert{positively depends} on rule \(r_1\)\\ if \(b\in\pbody{r_2}\) unifies with \(h\in\Head{r_1}\)
+    \item<only@-2> rule \(r_2\) \alert{positively depends} on rule \(r_1\)
+      \\if \(b\in\pbody{r_2}\) unifies with \(h\in\Head{r_1}\)
       \smallskip
-    \item \(G^+_P=(P,E)\) where \(E=\{ (r_1,r_2) \mid r_2 \mbox{ positively depends on } r_1 \}\)
+    \item \(G^+_P=(P,E)\) where \(E=\{ (r_1,r_2) \mid r_2 \text{ positively depends on } r_1 \}\)
     \end{itemize}
     \medskip
-  \item<3-> \structure{Topological ordering} \  \(L_P = (C_{1,1},\dots,C_{1,m_1},\dots,C_{n,1},\dots,C_{n,m_n})\)
+  \item<4-> \structure{Strongly connected components} \ of a directed graph form a partition into subgraphs
+    in which each node is reachable from any other node
+    \medskip
+  \item<5-> \structure{Topological ordering} \  \(L_P = (C_{1,1},\dots,C_{1,m_1},\dots,C_{n,1},\dots,C_{n,m_n})\)
     \par
-    where
+    of strongly connected components
+    such that
     \begin{itemize}\normalsize
     \item \((C_1,\dots,C_n)\) is a topological ordering of \(G_P\)
       \smallskip
