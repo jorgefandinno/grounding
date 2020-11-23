@@ -168,21 +168,20 @@ reach(a) :- \alert{reach(d)}, path(d,a).
 % ----------------------------------------------------------------------
 \begin{frame}{Grounding with dependencies}
   \bigskip
-  \begin{itemize}
-  \item []
-
-  \EmphAlgo{.7}{
-    \Fn{\(\GroundWithDependencies(P,D)\)}{
-      \(G \leftarrow \emptyset\)\;
-      \ForEach{\alert{\(C\) \In \(L_P\)}}{
-        \(G' \leftarrow \GroundBottomUp(C,D)\)\;
-        \((G,D) \leftarrow (G \cup G', D \cup \Head{G'})\)\;
+  \begin{center}
+    \EmphAlgo{.8}{
+      \Fn{\(\GroundWithDependencies(P,D)\)}{
+        \(G \leftarrow \emptyset\)\;
+        \ForEach{\alert{\(C\) \In \(L_P\)}}{
+          \(G' \leftarrow \GroundBottomUp(C,D)\)\;
+          \((G,D) \leftarrow (G \cup G', D \cup \Head{G'})\)\;
+        }
+        \Return \(G\)\;
       }
-      \Return \(G\)\;
     }
-  }
-
+  \end{center}
   \bigskip
+  \begin{itemize}
   \item<2-> \structure{Property} \ Given safe normal program \(P\) and set of facts \(I\),
 
     \(P \cup I\) is equivalent to \(\GroundWithDependencies(P,\Head{I}) \cup I\)
