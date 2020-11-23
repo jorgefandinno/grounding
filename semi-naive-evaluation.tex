@@ -24,24 +24,27 @@
 \begin{frame}{Preparing components}
 
   \begin{itemize}
-    \item the set of \alert{prepared rules} for \(r \in C\) is\\
-      \(\arraycolsep=1.4pt
-        \left\{\begin{array}{rcllllllll}
-          h & \texttt{:-} & \alert{n(b_1)}, & a(b_2),   & a(b_3), & \dots, & a(b_{i-2}), & a(b_{i-1}), & a(b_i), & B\\
-          h & \texttt{:-} & o(b_1), & \alert{n(b_2)},   & a(b_3), & \dots, & a(b_{i-2}), & a(b_{i-1}), & a(b_i), & B\\
-          \vdots &        & \vdots  &         &         & \ddots &             &             & \vdots  & \vdots \\
-          h & \texttt{:-} & o(b_1), & o(b_2), & o(b_3), & \dots, & o(b_{i-2}), & \alert{n(b_{i-1})}, & a(b_i), & B\\
-          h & \texttt{:-} & o(b_1), & o(b_2), & o(b_3), & \dots, & o(b_{i-2}), & o(b_{i-1}), & \alert{n(b_i)}, & B
-        \end{array}\right\}\)\\
-      or \(\{h \texttt{ :- } n(b_{i+1}), \dots, n(b_j), b_{j+1}, \dots, b_n\}\) if \(i=0\)
-      \begin{itemize}
-        \item[where]
-          \(\body{r} = \{ b_1, \dots, b_i, b_{i+1} \dots, b_j, b_{j+1}, \dots, b_n \}\), \\
-          \(b_k\in\pbody{r}\) for \(1\leq k \leq i\) is recursive, \\
-          \(b_k\in\pbody{r}\) for \(i< k \leq j\) is not recursive, and \\
-          \(B = a(b_{i+1}), \dots, a(b_j), b_{j+1}, \dots, b_n\)
-      \end{itemize}
-    \item a \alert{prepared component} is the union of all its prepared rules
+  \item The set of \alert{prepared rules} for \(r \in C\) is
+    \[\arraycolsep=1.4pt
+      \left\{
+        \begin{array}{rcllllllll}
+               h&\leftarrow&\alert{n(b_1)},&       a(b_2) ,&a(b_3),&\dots,&a(b_{i-2}),&       a(b_{i-1}) ,&       a(b_i), & B      \\
+               h&\leftarrow&       o(b_1) ,&\alert{n(b_2)},&a(b_3),&\dots,&a(b_{i-2}),&       a(b_{i-1}) ,&       a(b_i), & B      \\
+          \vdots&          &\vdots         &               &       &\ddots&           &                   &\vdots         & \vdots \\
+               h&\leftarrow&       o(b_1) ,&       o(b_2) ,&o(b_3),&\dots,&o(b_{i-2}),&\alert{n(b_{i-1})},&       a(b_i), & B      \\
+               h&\leftarrow&       o(b_1) ,&       o(b_2) ,&o(b_3),&\dots,&o(b_{i-2}),&       o(b_{i-1}) ,&\alert{n(b_i)},& B
+        \end{array}
+      \right\}
+    \]
+  \item [] or \quad \(\{\;h \leftarrow n(b_{i+1}), \dots, n(b_j), b_{j+1}, \dots, b_n\;\}\) \quad if \(i=0\)
+  \item [] where
+    \begin{itemize}
+    \item \(\body{r} = \{ b_1, \dots, b_i, b_{i+1} \dots, b_j, b_{j+1}, \dots, b_n \}\)
+    \item \(b_k\in\pbody{r}\) for \(1\leq k \leq i\) is recursive
+    \item \(b_k\in\pbody{r}\) for \(i< k \leq j\) is not recursive
+    \item \(B = a(b_{i+1}), \dots, a(b_j), b_{j+1}, \dots, b_n\)
+    \end{itemize}
+  \item<2-> A \alert{prepared component} is the union of all its prepared rules
   \end{itemize}
 \end{frame}
 % ----------------------------------------------------------------------
