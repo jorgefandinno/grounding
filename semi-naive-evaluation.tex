@@ -51,14 +51,14 @@
 \begin{frame}[fragile]{Preparing components}
 
 \begin{SemiVerbatim}{.9}
-{\color{comment}\% prepared Component\(_{1,1}\)}
+{\color{comment}\% prepared component \(C_{1,1}\)}
 omit(X,Y) :- \alert{n(edge(X,Y))}, not path(X,Y).
-{\color{comment}\% prepared Component\(_{1,2}\)}
+{\color{comment}\% prepared component \(C_{1,2}\)}
 path(X,Y) :- \alert{n(edge(X,Y))}, not omit(X,Y).
-{\color{comment}\% prepared Component\(_{2,1}\)}
+{\color{comment}\% prepared component \(C_{2,1}\)}
 :- \alert{n(path(X,Y))}, \alert{n(path(X',Y))}, X < X'.
 ...
-{\color{comment}\% prepared Component\(_{7,1}\)}
+{\color{comment}\% prepared component \(C_{7,1}\)}
 reach(Y) :- \alert{n(reach(X))}, \alert{a(path(X,Y))}.
 ...
 \end{SemiVerbatim}
@@ -90,7 +90,7 @@ reach(Y) :- \alert{n(reach(X))}, \alert{a(path(X,Y))}.
   \end{itemize}
 \end{frame}
 % ----------------------------------------------------------------------
-\begin{frame}[fragile]{Grounding component \(C_{7,1}\)}{Hamiltonian cycle}
+\begin{frame}[fragile,shrink]{Grounding component \(C_{7,1}\)}{Hamiltonian cycle}
 
 \begin{SemiVerbatim}[\small]{.9}
 {\color{comment}\% grounding of
