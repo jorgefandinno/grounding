@@ -1,14 +1,17 @@
-
-
-\begin{frame}{Recursive Atoms}
-  \vfill
+% ----------------------------------------------------------------------
+\begin{frame}{Recursive atoms}
+  \bigskip
   \begin{itemize}
-    \item given \(L_P = (C_1, \dots, C_n)\), an atom \(a_1\) is \alert{recursive} in component \(C_i\) if \(a_1\) unifies \(a_2\) such that
-      \begin{itemize}
-        \item \(r_1 \in C_i\) and \(r_2 \in C_j\) with \(i \leq j\),
-        \item \(a_1 \in \pbody{r_1}\cup\nbody{r_1}\), and
-        \item \(a_2 \in \head{r_2}\)
-      \end{itemize}
+  \item Given \(L_P = (C_1, \dots, C_n)\), an atom \(a_1\) is \alert{recursive} in component \(C_i\)
+
+    if \(a_1\) unifies \(a_2\) such that
+
+    \smallskip
+    \begin{itemize}\normalsize
+    \item \(r_1 \in C_i\) and \(r_2 \in C_j\) with \(i \leq j\)
+    \item \(a_1 \in \pbody{r_1}\cup\nbody{r_1}\)
+    \item \(a_2 \in \head{r_2}\)
+    \end{itemize}
   \end{itemize}
 \end{frame}
 % ----------------------------------------------------------------------
