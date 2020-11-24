@@ -28,7 +28,6 @@
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}[fragile,shrink]{Bottom up grounding, step 1}{Hamiltonian cycle}
-  \vfill
 \begin{SemiVerbatim}[\small]{.9}
 {\color{comment}\% Step 1}
 path(a,b) :- not omit(a,b), \alert{edge(a,b)}.
@@ -50,7 +49,6 @@ reach(a) :- \alert{start(a)}.
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}[fragile,shrink]{Bottom up grounding, step 2}{Hamiltonian cycle}
-  \vfill
 \begin{SemiVerbatim}[\small]{.9}
 {\color{comment}\% Step 2 \alert{and} rules of Step 1}
 :- \alert{path(a,c)}, \alert{path(b,c)}, a < b.
@@ -71,7 +69,7 @@ reach(c) :- \alert{reach(a)}, \alert{path(a,c)}.
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}[fragile,shrink]{Bottom up grounding, step 3 and 4}{Hamiltonian cycle}
-  \vfill
+  \bigskip
 \begin{SemiVerbatim}{.9}
 {\color{comment}\% Step 3 \alert{and} rules of Step 2}
 reach(c) :- \alert{reach(b)}, path(b,c).

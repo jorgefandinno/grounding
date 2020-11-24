@@ -28,7 +28,6 @@ start(a).
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}[fragile,shrink]{Hamiltonian cycle}{Encoding}
-  \bigskip
 \begin{SemiVerbatim}[\small]{.9}
 {\color{comment}\% generate path}
 path(X,Y) :- not omit(X,Y), edge(X,Y).
@@ -50,7 +49,6 @@ reach(Y) :- reach(X), path(X,Y).
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}{Essential concepts}
-  \smallskip
   \begin{itemize}
     \item \structure{Safety}
       \begin{itemize}\normalsize
@@ -98,7 +96,7 @@ reach(Y) :- reach(X), path(X,Y).
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}[fragile,shrink]{Unnecessary rules, I}{Hamiltonian cycle}
-  \medskip
+  \bigskip
   \begin{columns}
     \begin{column}{0.6\textwidth}
       \begin{minipage}{0.6\textwidth}\small

@@ -49,7 +49,6 @@
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}[fragile]{Preparing components}
-
 \begin{SemiVerbatim}{.9}
 {\color{comment}\% prepared component \(C_{1,1}\)}
 omit(X,Y) :- \alert{n(edge(X,Y))}, not path(X,Y).
@@ -82,7 +81,7 @@ reach(Y) :- \alert{n(reach(X))}, \alert{a(path(X,Y))}.
       }
     }
   \end{center}
-  \medskip
+  \smallskip
   \begin{itemize}
   \item<2-> \structure{Property} \ Given safe normal program \(P\) and set of facts \(I\),
 
@@ -91,7 +90,6 @@ reach(Y) :- \alert{n(reach(X))}, \alert{a(path(X,Y))}.
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}[fragile,shrink]{Grounding component \(C_{7,1}\)}{Hamiltonian cycle}
-
 \begin{SemiVerbatim}[\small]{.9}
 {\color{comment}\% grounding of
 \% reach(Y) :- {n(reach(X))}, a(path(X,Y)).}
@@ -114,7 +112,7 @@ reach(a) :- \only<1>{n(}\alert{reach(d)}\only<1>{)}, \only<1>{a(}path(d,a)\only<
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}[fragile]{Nonlinear programs}{Example}
-\vfill
+\bigskip
 \begin{SemiVerbatim}{.9}
 trans(U,V) :- edge(U,V).
 {\only<2>{\color{comment}\% }trans(U,W) :- \alert<1>{trans(U,V)}, \alert<1>{trans(V,W)}.}
