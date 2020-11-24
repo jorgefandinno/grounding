@@ -2,7 +2,7 @@
 \begin{frame}{Bottom up grounding}
   \begin{itemize}
   \item<1-> \structure{Idee} \
-    Ground \alert{relevant} rules by gradually extending the Herbrand base
+    Ground \alert{relevant} rules by gradually extending the atom base
   \item<1-> \structure{Algorithm} \
     \begin{align*}
       \cground{P}{D} & = \{ r \in \ground{P} \mid \alert{\pbody{r} \subseteq D}\only<2>{,\\
@@ -113,7 +113,7 @@ reach(a) :- \alert{reach(d)}, path(d,a).
   \begin{itemize}
   \item Use dependencies to \alert{focus} grounding
     \begin{itemize}\normalsize
-    \item begin with partial Herbrand base given by facts
+    \item begin with partial atom base given by facts
     \item use rule dependency graph of program to obtain \alert{components} that can be \alert{grounded successively}
     \end{itemize}
     \medskip

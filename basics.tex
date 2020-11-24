@@ -54,19 +54,19 @@ reach(Y) :- reach(X), path(X,Y).
       \begin{itemize}\normalsize
         \item each variable must occur in a positive body literal
       \end{itemize}
-    \item \structure{Herbrand universe}
-      \begin{itemize}\normalsize
+    \item \structure{Term universe} \ of a program
+      \begin{itemize}
         \item
           all constants in program and\\
           all functions over function symbols in program
       \end{itemize}
-    \item \structure{Herbrand base}
-      \begin{itemize}\normalsize
-        \item all atoms over predicates in program\\ with terms from Herbrand universe
+    \item \structure{Atom base} \ of a program
+      \begin{itemize}
+        \item all ground atoms over predicates in program
       \end{itemize}
-    \item \structure{Ground instance}  of a rule
-      \begin{itemize}\normalsize
-        \item all variables replaced with elements from Herbrand universe
+    \item \structure{Ground instance} \ of a rule
+      \begin{itemize}
+        \item all variables replaced with elements from term universe
       \end{itemize}
     \item \structure{Grounding instantiation} of a logic program
       \begin{itemize}\normalsize
@@ -78,7 +78,7 @@ reach(Y) :- reach(X), path(X,Y).
 % ----------------------------------------------------------------------
 \begin{frame}[fragile,shrink]{Size of grounding}{Hamiltonian cycle}
   \begin{SemiVerbatim}{.9}
-{\color{comment}\% Herbrand Universe: \{a,b,c,d\}}
+{\color{comment}\% term universe: \{a,b,c,d\}}
 12 facts from instance
 {\color{comment}\% path(X,Y) :- not omit(X,Y), edge(X,Y).}
 {\color{comment}\% omit(X,Y) :- not path(X,Y), edge(X,Y).}
