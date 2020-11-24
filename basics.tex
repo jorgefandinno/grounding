@@ -50,8 +50,8 @@ reach(Y) :- reach(X), path(X,Y).
 % ----------------------------------------------------------------------
 \begin{frame}{Essential concepts}
   \begin{itemize}
-    \item \structure{Safety}
-      \begin{itemize}\normalsize
+    \item \structure{Safety} \ of a rule
+      \begin{itemize}
         \item each variable must occur in a positive body literal
       \end{itemize}
     \item \structure{Term universe} \ of a program
@@ -68,8 +68,8 @@ reach(Y) :- reach(X), path(X,Y).
       \begin{itemize}
         \item all variables replaced with elements from term universe
       \end{itemize}
-    \item \structure{Grounding instantiation} of a logic program
-      \begin{itemize}\normalsize
+    \item \structure{Grounding instantiation} \ of a logic program
+      \begin{itemize}
         \item \(\ground{P}\) is the union of all instances of % all
               rules in \(P\)
       \end{itemize}
