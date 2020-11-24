@@ -47,23 +47,23 @@
       node/.style={circle,minimum size=5mm,draw},
       start/.style={circle,double=bg,minimum size=5mm,draw}]
     \node (omit) at (0,0) [draw,anchor=west] {omit(X,Y) :- not {#1{path(X,Y)}}, edge(X,Y).};
-    \node [left=of omit] { Component\(_{1,1}\): };
+    \node [left=of omit] { \(C_{1,1}\) };
     \node (path) at (0,1) [draw,anchor=west] {path(X,Y) :- not omit(X,Y), edge(X,Y).};
-    \node [left=of path] { Component\(_{1,2}\): };
+    \node [left=of path] { \(C_{1,2}\) };
     \node (inde) at (0,2) [draw,anchor=west] {:- path(X,Y), path(X',Y), X < X'.};
-    \node [left=of inde] { Component\(_{2,1}\): };
+    \node [left=of inde] { \(C_{2,1}\) };
     \node (outd) at (0,3) [draw,anchor=west] {:- path(X,Y), path(X,Y'), Y < Y'.};
-    \node [left=of outd] { Component\(_{3,1}\): };
+    \node [left=of outd] { \(C_{3,1}\) };
     \node (onpa) at (0,4) [draw,anchor=west] {on\_path(Y) :- path(X,Y), path(Y,Z).};
-    \node [left=of onpa] { Component\(_{4,1}\): };
+    \node [left=of onpa] { \(C_{4,1}\) };
     \node (conp) at (0,5) [draw,anchor=west] {:- node(X), not on\_path(X).};
-    \node [left=of conp] { Component\(_{5,1}\): };
+    \node [left=of conp] { \(C_{5,1}\) };
     \node (star) at (0,6) [draw,anchor=west] {reach(X) :- start(X).};
-    \node [left=of star] { Component\(_{6,1}\): };
+    \node [left=of star] { \(C_{6,1}\) };
     \node (reac) at (0,7) [draw,anchor=west] {reach(Y) :- {#1{reach(X)}}, path(X,Y).};
-    \node [left=of reac] { Component\(_{7,1}\): };
+    \node [left=of reac] { \(C_{7,1}\) };
     \node (crea) at (0,8) [draw,anchor=west] {:- node(X), not reach(X).};
-    \node [left=of crea] { Component\(_{8,1}\): };
+    \node [left=of crea] { \(C_{8,1}\) };
 
     \coordinate (lomi) at ($(omit.west)-(3mm,0mm)$);
     \coordinate (romi) at ($(omit.east)+(3mm,0mm)$);
