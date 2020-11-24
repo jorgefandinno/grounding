@@ -49,7 +49,7 @@
     \EmphAlgo{1}{
       \Fn{\(\GroundBacktrack_{r,R,D}(\sigma, F, (b_1,\dots,b_n))\)}{
         \eIf{\(n=0\)}{
-          \(\Let~H = \head{r\sigma}\)\;
+          \(\Let~H = \Head{r\sigma}\)\; % make it a set
           \(\phantom{\Let~}B = \pbody{r\sigma} \setminus F \cup {}\)\;
           \(\phantom{\Let~B = {}} \{ \texttt{not }a\sigma \mid a \in \nbody{r} \setminus R, a \in D \} \cup {}\)\;
           \(\phantom{\Let~B = {}} \{ \texttt{not }a\sigma \mid a \in \nbody{r} \cap R \}\)\;
