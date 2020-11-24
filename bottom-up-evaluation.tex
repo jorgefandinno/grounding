@@ -149,10 +149,10 @@ reach(a) :- \alert{reach(d)}, path(d,a).
     \item \(G^+_P=(P,E)\) where \(E=\{ (r_1,r_2) \mid r_2 \text{ positively depends on } r_1 \}\)
     \end{itemize}
     \medskip
-  \item<4-> \structure{Strongly connected components} \ of a directed graph form a partition into subgraphs
+  \item<only@4-> \structure{Strongly connected components} \ of a directed graph form a partition into subgraphs
     in which each node is reachable from any other node
     \medskip
-  \item<5-> \structure{Topological ordering} \  \(L_P = (C_{1,1},\dots,C_{1,m_1},\dots,C_{n,1},\dots,C_{n,m_n})\)
+  \item<only@5-> \structure{Topological ordering} \  \(L_P = (C_{1,1},\dots,C_{1,m_1},\dots,C_{n,1},\dots,C_{n,m_n})\)
     \par
     of strongly connected components
     such that
@@ -194,12 +194,12 @@ reach(a) :- \alert{reach(d)}, path(d,a).
 % ----------------------------------------------------------------------
 \begin{frame}[fragile,shrink]{Grounding with dependencies}{Hamiltonian cycle}
 \begin{SemiVerbatim}{.9}
-{\color{comment}\% Component\(_{1,1}\)}
+{\color{comment}\% component \(C_{1,1}\)}
 omit(a,b) :- not path(a,b), \alert{edge(a,b)}.
           \(\vdots\) {\color{comment}\% 7 rules total}
 omit(d,a) :- not path(d,a), \alert{edge(d,a)}.
 
-{\color{comment}\% Component\(_{1,2}\)}
+{\color{comment}\% component \(C_{1,2}\)}
 path(a,b) :- not omit(a,b), \alert{edge(a,b)}.
           \(\vdots\) {\color{comment}\% 7 rules total}
 path(d,a) :- not omit(d,a), \alert{edge(d,a)}.
