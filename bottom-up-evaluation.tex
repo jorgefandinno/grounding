@@ -1,7 +1,7 @@
 % ----------------------------------------------------------------------
 \begin{frame}{Bottom up grounding}
   \begin{itemize}
-  \item<1-> \structure{Idee} \
+  \item<1-> \structure{Idea} \
     Ground \alert{relevant} rules by gradually extending the atom base
   \item<1-> \structure{Algorithm} \
     \begin{align*}
@@ -137,7 +137,7 @@ reach(a) :- \alert{reach(d)}, path(d,a).
     \item \(G^+_P=(P,E)\) where \(E=\{ (r_1,r_2) \mid r_2 \text{ positively depends on } r_1 \}\)
     \end{itemize}
     \medskip
-  \item<only@4-> \structure{Strongly connected components} of a directed graph form a partition into subgraphs
+  \item<only@4-> \structure{Strongly connected components} of a directed graph form a partition into sub-graphs
     in which each node is reachable from any other node
     \medskip
   \item<only@5-> \structure{Topological ordering} \
@@ -210,7 +210,7 @@ path(d,a) :- not omit(d,a), \alert{edge(d,a)}.
 \end{SemiVerbatim}
 \vspace{-.8cm}
 \begin{itemize}
-\item<2-> No regrounding if there is no positive recursion in a component
+\item<2-> No re-grounding if there is no positive recursion in a component
 \end{itemize}
 \smallskip
 \end{frame}
@@ -230,7 +230,7 @@ reach(d) :- \alert{reach(c)}, path(c,d).
 {\color{comment}\% Step 3 \alert{and} rules of Step 2}
 reach(a) :- \alert{reach(d)}, path(d,a).
 
-{\color{comment}\% less regrounding but still...}
+{\color{comment}\% less re-grounding but still...}
 \end{SemiVerbatim}
 \end{frame}
 % ----------------------------------------------------------------------
