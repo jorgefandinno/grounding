@@ -1,8 +1,23 @@
 % ----------------------------------------------------------------------
-\begin{frame}{Recursive atoms}
+\begin{frame}{Semi-naive grounding}
   \bigskip
   \begin{itemize}
-  \item Given \(L_P = (C_1, \dots, C_n)\), an atom \(a_1\) is \alert{recursive} in component \(C_i\)
+  \item<1-> \structure{Idea} \ (originates from database systems~\cite{abhuvi95a})
+    \par\smallskip
+    Semi-naive grounding focuses on the new generated atoms
+    \par
+    at each level in order to avoid recomputing the same atoms
+
+
+  \item<1->[] Inferring a new atom at step $i$ relies on at least one atom
+    \par
+    newly derived at step $i-1$
+
+    \medskip
+  \item<2-> \structure{Recursive atoms} \
+    Given \(L_P = (C_1, \dots, C_n)\),
+
+    an atom \(a_1\) is \alert{recursive} in component \(C_i\)
 
     if \(a_1\) unifies \(a_2\) such that
 
