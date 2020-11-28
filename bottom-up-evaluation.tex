@@ -3,11 +3,12 @@
   \begin{itemize}
   \item<1-> \structure{Idea} \
     Ground \alert{relevant} rules by gradually extending the atom base
-  \item<1-> \structure{Algorithm} \
+  \item<2-> \structure{Relative grounding instantiation} \ of a logic program $P$
+    \par wrt a set of ground atoms $D$
     \begin{align*}
       \cground{P}{D} & = \{ r \in \ground{P} \mid \alert{\pbody{r} \subseteq D} \}
     \end{align*}
-  \item<only@2->[]
+  \item<only@3-> \structure{Algorithm}
 
     \EmphAlgo{0.8}{
       \Fn{\(\GroundBottomUp(P,D)\)}{
@@ -19,8 +20,7 @@
       }
     }
 
-    \medskip
-  \item<only@3-> \structure{Property} \ Given a safe normal program \(P\) and set of ground facts \(I\),
+  \item<only@4-> \structure{Property} \ Given a safe normal program \(P\) and set of ground facts \(I\),
 
     \(P \cup I\) is equivalent to \(\GroundBottomUp(P,\Head{I}) \cup I\)
   \end{itemize}
