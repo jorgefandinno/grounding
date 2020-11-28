@@ -113,7 +113,7 @@ path(a,d) :- not omit(a,d), \alert{edge(a,d)}.
           \(\vdots\)
 path(d,a) :- not omit(d,a), edge(d,a).
 path(d,b) :- not omit(d,b), \alert{edge(d,b).}
-path(d,c) :- not omit(d,c), \alert{edge(d,d).}
+path(d,c) :- not omit(d,c), \alert{edge(d,c).}
 path(d,d) :- not omit(d,d), \alert{edge(d,d).}
 
       \end{semiverbatim}
