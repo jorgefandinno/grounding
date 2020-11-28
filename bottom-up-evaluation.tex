@@ -137,18 +137,31 @@ reach(a) :- \alert{reach(d)}, path(d,a).
     \item \(G^+_P=(P,E)\) where \(E=\{ (r_1,r_2) \mid r_2 \text{ positively depends on } r_1 \}\)
     \end{itemize}
     \medskip
-  \item<only@4-> \structure{Strongly connected components} \ of a directed graph form a partition into subgraphs
+  \item<only@4-> \structure{Strongly connected components} of a directed graph form a partition into subgraphs
     in which each node is reachable from any other node
     \medskip
-  \item<only@5-> \structure{Topological ordering} \  \(L_P = (C_{1,1},\dots,C_{1,m_1},\dots,C_{n,1},\dots,C_{n,m_n})\)
-    \par
+  \item<only@5-> \structure{Topological ordering} \
     of strongly connected components
-    such that
     \begin{itemize}\normalsize
-    \item \((C_1,\dots,C_n)\) is a topological ordering of \(G_P\)
+    \item<6-> \((C_1,\dots,C_n)\) is a topological ordering of \(G_P\)\only<6>{,}
       \smallskip
-    \item \((C_{i,1},\dots,C_{i,m_i})\) is a topological ordering of each \(G^+_{C_i}\)
+    \item[]<only@6>
+      that is,
+      \(
+      (r_1,r_2)\in E,
+      r_1\in C_i,
+      r_2\in C_j,
+      \)
+      implies
+      \(
+      i\leq j\)
+      \smallskip
+    \item<only@7-> \((C_{i,1},\dots,C_{i,m_i})\) is a topological ordering of each \(G^+_{C_i}\)
     \end{itemize}
+  \item<only@8->[]\structure{\itarrow} \
+    \(
+    L_P = (C_{1,1},\dots,C_{1,m_1},\dots,C_{n,1},\dots,C_{n,m_n})
+    \)
   \end{itemize}
 \end{frame}
 % ----------------------------------------------------------------------
