@@ -91,18 +91,7 @@ reach(a) :- \alert{reach(d)}, path(d,a).
     \end{itemize}
     \smallskip
   \item \alert{Re-grounds} rules from previous steps
-
-  \EmphAlgo{0.8}{
-    \Fn{\(\GroundBottomUp(P,D)\)}{
-      \(G \leftarrow \cground{P}{D}\)\;
-      \If{\(\Head{G} \not\subseteq D\)}{
-        \Return \(\GroundBottomUp(P,D \alert{\cup \Head{G}})\)\;
-      }
-      \Return \(G\)\;
-    }
-  }
-
-  \medskip
+    \medskip
   \item Performs no \alert{simplifications}
   \end{itemize}
 \end{frame}
