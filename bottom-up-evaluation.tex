@@ -5,10 +5,9 @@
     Ground \alert{relevant} rules by gradually extending the atom base
   \item<1-> \structure{Algorithm} \
     \begin{align*}
-      \cground{P}{D} & = \{ r \in \ground{P} \mid \alert{\pbody{r} \subseteq D}\only<2>{,\\
-                     &\qquad \text{ all comparison literals in \(\body{r}\) are satisfied}} \}
+      \cground{P}{D} & = \{ r \in \ground{P} \mid \alert{\pbody{r} \subseteq D} \}
     \end{align*}
-  \item<only@4->[]
+  \item<only@2->[]
 
     \EmphAlgo{0.8}{
       \Fn{\(\GroundBottomUp(P,D)\)}{
