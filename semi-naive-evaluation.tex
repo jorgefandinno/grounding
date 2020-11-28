@@ -49,15 +49,16 @@
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}[fragile]{Preparing components}
+\newcommand{\Component}[1]{\(C_{#1}\)}
 \begin{SemiVerbatim}{.9}
-{\color{comment}\% prepared component \(C_{1,1}\)}
+{\color{comment}\% prepared component \Component{1,1}}
 omit(X,Y) :- \alert{n(edge(X,Y))}, not path(X,Y).
-{\color{comment}\% prepared component \(C_{1,2}\)}
+{\color{comment}\% prepared component \Component{1,2}}
 path(X,Y) :- \alert{n(edge(X,Y))}, not omit(X,Y).
-{\color{comment}\% prepared component \(C_{2,1}\)}
+{\color{comment}\% prepared component \Component{2,1}}
 :- \alert{n(path(X,Y))}, \alert{n(path(X',Y))}, X < X'.
 ...
-{\color{comment}\% prepared component \(C_{7,1}\)}
+{\color{comment}\% prepared component \Component{7,1}}
 reach(Y) :- \alert{n(reach(X))}, \alert{a(path(X,Y))}.
 ...
 \end{SemiVerbatim}

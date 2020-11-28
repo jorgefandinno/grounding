@@ -194,13 +194,14 @@ reach(a) :- \alert{reach(d)}, path(d,a).
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}[fragile,shrink]{Grounding with dependencies}{Hamiltonian cycle}
+\newcommand{\Component}[1]{\(C_{#1}\)}
 \begin{SemiVerbatim}{.9}
-{\color{comment}\% component \(C_{1,1}\)}
+{\color{comment}\% component \Component{1,1}}
 omit(a,b) :- not path(a,b), \alert{edge(a,b)}.
           \(\vdots\) {\color{comment}\% 7 rules total}
 omit(d,a) :- not path(d,a), \alert{edge(d,a)}.
 
-{\color{comment}\% component \(C_{1,2}\)}
+{\color{comment}\% component \Component{1,2}}
 path(a,b) :- not omit(a,b), \alert{edge(a,b)}.
           \(\vdots\) {\color{comment}\% 7 rules total}
 path(d,a) :- not omit(d,a), \alert{edge(d,a)}.
