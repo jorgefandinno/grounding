@@ -58,9 +58,9 @@ reach(a) :- \alert{start(a)}.
 :- \alert{path(c,a)}, \alert{path(c,d)}, a < d.
 :- \alert{path(b,c)}, \alert{path(b,d)}, c < d.
 
-on_path(a) :- \alert{path(a,b)}, \alert{path(c,a)}.
+on_path(a) :- \alert{path(c,a)}, \alert{path(a,c)}.
            \(\vdots\) {\color{comment}\% 12 rules total}
-on_path(d) :- \alert{path(d,a)}, \alert{path(c,d)}.
+on_path(d) :- \alert{path(c,d)}, \alert{path(d,a)}.
 
 reach(b) :- \alert{reach(a)}, \alert{path(a,b)}.
 reach(c) :- \alert{reach(a)}, \alert{path(a,c)}.
