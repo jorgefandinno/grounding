@@ -121,31 +121,31 @@ reach(a) :- \alert{reach(d)}, path(d,a).
 \begin{frame}{Program dependencies}
   \smallskip
   \begin{itemize}
-  \item<1-> \structure{Dependency graph} of program \(P\)
+  \item<2-> \structure{Dependency graph} of program \(P\)
     \begin{itemize}\normalsize
-    \item<only@-2> rule \(r_2\) \alert{depends} on rule \(r_1\)
+    \item<only@-3> rule \(r_2\) \alert{depends} on rule \(r_1\)
       \\if \(b\in\pbody{r_2}\cup\nbody{r_2}\) unifies with \(h\in\head{r_1}\)
       \smallskip
     \item \(G_P=(P,E)\) where \(E=\{ (r_1,r_2) \mid r_2 \text{ depends on } r_1 \}\)
     \end{itemize}
     \medskip
-  \item<2-> \structure{Positive dependency graph} of program \(P\)
+  \item<3-> \structure{Positive dependency graph} of program \(P\)
     \begin{itemize}\normalsize
-    \item<only@-2> rule \(r_2\) \alert{positively depends} on rule \(r_1\)
+    \item<only@-3> rule \(r_2\) \alert{positively depends} on rule \(r_1\)
       \\if \(b\in\pbody{r_2}\) unifies with \(h\in\Head{r_1}\)
       \smallskip
     \item \(G^+_P=(P,E)\) where \(E=\{ (r_1,r_2) \mid r_2 \text{ positively depends on } r_1 \}\)
     \end{itemize}
     \medskip
-  \item<only@4-> \structure{Strongly connected components} of a directed graph form a partition into sub-graphs
+  \item<only@5-> \structure{Strongly connected components} of a directed graph form a partition into sub-graphs
     in which each node is reachable from any other node
     \medskip
-  \item<only@5-> \structure{Topological ordering} \
+  \item<only@6-> \structure{Topological ordering} \
     of strongly connected components
     \begin{itemize}\normalsize
-    \item<6-> \((C_1,\dots,C_n)\) is a topological ordering of \(G_P\)\only<6>{,}
+    \item<7-> \((C_1,\dots,C_n)\) is a topological ordering of \(G_P\)\only<7>{,}
       \smallskip
-    \item[]<only@6>
+    \item[]<only@7>
       that is,
       \(
       (r_1,r_2)\in E,
@@ -156,9 +156,9 @@ reach(a) :- \alert{reach(d)}, path(d,a).
       \(
       i\leq j\)
       \smallskip
-    \item<only@7-> \((C_{i,1},\dots,C_{i,m_i})\) is a topological ordering of each \(G^+_{C_i}\)
+    \item<only@8-> \((C_{i,1},\dots,C_{i,m_i})\) is a topological ordering of each \(G^+_{C_i}\)
     \end{itemize}
-  \item<only@8->[]\structure{\itarrow} \
+  \item<only@9->[]\structure{\itarrow} \
     \(
     L_P = (C_{1,1},\dots,C_{1,m_1},\dots,C_{n,1},\dots,C_{n,m_n})
     \)
