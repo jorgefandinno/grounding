@@ -71,7 +71,7 @@ path(d,a) :- not omit(d,a).
 \alert{reach(c)} :- path(a,c).
 \alert{reach(c)} :- path(b,c), reach(b).
 ...
-\mbox{{\color{comment}\% reach(X) is not recursive and reach(d)\({}\not\in{}A\)}}
+\mbox{{\color{comment}\% reach(d)\({}\not\in{}D\) (atom base)}}
 :- not reach(b).
 :- not reach(c).
 :- \only<1>{not \alert{reach(d)}}. \color{comment}\% \alt<2>{inconsistency detected during grounding}{remove not reach(d) from body}
