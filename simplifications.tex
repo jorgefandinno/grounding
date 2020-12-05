@@ -12,13 +12,16 @@
     \item [\itarrow] each true atom amounts to a fact
     \end{itemize}
     \medskip
-  \item<3-> Remove facts from positive body
-    \smallskip
-  \item<3-> Discard rules with negative literals over a fact
-    \smallskip
-  \item<3-> Discard rules whenever the head is a fact
-    \smallskip
-  \item<3-> Gather new facts whenever a rule body is empty
+  \item<3-> \structure{Simplifications}
+    \begin{itemize}\normalsize
+    \item Remove facts from positive body
+      \smallskip
+    \item Discard rules with negative literals over a fact
+      \smallskip
+    \item Discard rules whenever the head is a fact
+      \smallskip
+    \item Gather new facts whenever a rule body is empty
+    \end{itemize}
   \end{itemize}
 \end{frame}
 % ----------------------------------------------------------------------
