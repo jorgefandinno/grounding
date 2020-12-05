@@ -40,18 +40,18 @@ reach(a)\only<1>{ :- \alert{start(a)}}. {\only<2->{\color{comment}\% reach(a) is
 \end{SemiVerbatim}
 \end{frame}
 % ----------------------------------------------------------------------
-\begin{frame}{Propagation of negative literals}
+\begin{frame}{Propagation of false atoms}
   \bigskip
   \begin{itemize}
-  \item \alert{Non-recursive negative literals} whose atom is not in the current
-    \\ atom base can be removed from rule bodies
+  \item<2-> \alert{Non-recursive body negative literals} whose atom is not in the
+    \\ current atom base can be removed from rule bodies
     \medskip
-  \item \structure{Example} \ Consider the instance where node \texttt{d} is not reachable
-  \end{itemize}
+  \item<3-> \structure{Example} \ Consider the instance where node \texttt{d} is not reachable
   \bigskip
   \begin{center}
     \Graph[draw=none]
   \end{center}
+  \end{itemize}
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}[fragile,shrink]{Propagation of negative literals}{Hamiltonian cycle}
