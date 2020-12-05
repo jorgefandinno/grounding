@@ -1,23 +1,28 @@
 % ----------------------------------------------------------------------
-\begin{frame}{Propagation of facts}
+\begin{frame}{Propagation of\only<2->{ true} atoms}
   \bigskip
   \begin{itemize}
-    \item Simplifications are performed \alert{on-the-fly}\\
-      (rules are printed immediately but not stored in \gringo)
+  \item Simplifications are performed \alert{on-the-fly} relative to the atom base
+    \begin{itemize}\normalsize
+    \item [\itarrow] rules are printed immediately but not stored in \gringo
+    \end{itemize}
+    \medskip
+  \item<2-> Distinguish a set of \alert{true atoms} among the atom base
+    \begin{itemize}\normalsize
+    \item [\itarrow] each true atom amounts to a fact
+    \end{itemize}
+    \medskip
+  \item<3-> Remove facts from positive body
     \smallskip
-    \item Maintain a set of \alert{fact atoms}
+  \item<3-> Discard rules with negative literals over a fact
     \smallskip
-    \item Remove facts from positive body
+  \item<3-> Discard rules whenever the head is a fact
     \smallskip
-    \item Discard rules with negative literals over a fact
-    \smallskip
-    \item Discard rules whenever the head is a fact
-    \smallskip
-    \item Gather new facts whenever a rule body is empty
+  \item<3-> Gather new facts whenever a rule body is empty
   \end{itemize}
 \end{frame}
 % ----------------------------------------------------------------------
-\begin{frame}[fragile]{Propagation of facts}{Hamiltonian cycle}
+\begin{frame}[fragile]{Propagation of true atoms}{Hamiltonian cycle}
   \bigskip
   \begin{SemiVerbatim}{.9}
 ...
@@ -35,11 +40,10 @@ reach(a)\only<1>{ :- \alert{start(a)}}. {\only<2->{\color{comment}\% reach(a) is
 \begin{frame}{Propagation of negative literals}
   \bigskip
   \begin{itemize}
-  \item \alert{Non-recursive negative literals} not in the current atom base can be\\ removed from rule bodies
-    \smallskip
-  \item \alert{Stratified} logic programs are \alert{completely evaluated} during grounding
-    \smallskip
-  \item Consider the instance where node \texttt{d} is not reachable
+  \item \alert{Non-recursive negative literals} whose atom is not in the current
+    \\ atom base can be removed from rule bodies
+    \medskip
+  \item \structure{Example} \ Consider the instance where node \texttt{d} is not reachable
   \end{itemize}
   \bigskip
   \begin{center}
@@ -78,6 +82,38 @@ path(d,a) :- not omit(d,a).
   \end{columns}
 \end{frame}
 % ----------------------------------------------------------------------
+\begin{frame}{Stratified logic programs}
+  \bigskip
+  \begin{itemize}
+  \item<only@2-5> The \alert{definition} of a predicate $p$ in a program $P$, written $\mathit{def}_P(p)$,
+    \\
+    is the subset of $P$ consisting of all rules with $p$ in the head
+    \medskip
+  \item<3-> A logic program $P$ is \alert{stratified}, if
+    \alt<6>{its dependency graph has no cycles containing negative edges}
+    {it has a partition
+    \(
+    (P_i)_{0\leq i\leq n}
+    \)
+
+    such that for each predicate $p$
+    \begin{itemize}\normalsize
+    \item $\mathit{def}_P(p)\subseteq P_i$ for some $i\in I$
+    \end{itemize}
+    and, for each $1\leq i\leq n$,
+    \begin{itemize}\normalsize
+    \item if $p$ occurs in \pbody{r} for some $r\in P_i$, then $\mathit{def}_P(p)\subseteq\bigcup_{j\leq i} P_j$
+    \item if $p$ occurs in \nbody{r} for some $r\in P_i$, then $\mathit{def}_P(p)\subseteq\bigcup_{j  <  i} P_j$
+    \end{itemize}}
+  \medskip
+  \item<4-> \structure{Property} \
+    Stratified logic programs
+    \begin{itemize}\normalsize
+    \item are \alert{completely evaluated} during grounding
+    \item <5-> have a single stable model
+    \end{itemize}
+  \end{itemize}
+\end{frame}
 %
 %%% Local Variables:
 %%% mode: latex
