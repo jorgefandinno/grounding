@@ -19,14 +19,16 @@
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}{Matching body literals}
+  \bigskip
   \begin{itemize}
   \item \(\match{\sigma,b}{F,D}\) is the set of \alert{all matches for literal} \(b\)
-    \begin{itemize}
+    \begin{itemize}\normalsize
     \item \(\sigma\) is a substitution
-    \item \(F\) are facts (set of ground atoms)
-    \item \(D\) is the domain (set of ground atoms)
-    \item \(\sigma' \in \match{\sigma,b}{F,D}\) if
-      \begin{itemize}\small
+    \item \(F\) are true atoms (set of ground atoms)
+    \item \(D\) is the atom base (set of ground atoms)
+      \medskip
+    \item<2-> \(\sigma' \in \match{\sigma,b}{F,D}\) if
+      \begin{itemize}\normalsize
       \item \(\sigma \subseteq \sigma'\) and \(\vars{b} \subseteq \vars{\sigma'} \subseteq \vars{b} \cup \vars{\sigma}\),
       \item \(b\sigma'\) holds if \(b\) is a comparison literal,
       \item \(b\sigma' \in D\) if \(b\) is an atom, and
