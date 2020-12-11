@@ -10,6 +10,7 @@
     \end{itemize}
     \bigskip
   \item<2-> \structure{Example} \ Given rule `\texttt{:- node(X), not reach(X).}'
+    \smallskip
     \begin{itemize}\normalsize
     \item \((\texttt{node(X)}, \texttt{not reach(X)})\) is a safe body order
       \smallskip
@@ -23,16 +24,17 @@
   \begin{itemize}
   \item \(\match{\sigma,b}{F,D}\) is the set of \alert{all matches for literal} \(b\)
     \begin{itemize}\normalsize
-    \item \(\sigma\) is a substitution
+    \item \(\sigma\) is a (ground) substitution
     \item \(F\) are true atoms (set of ground atoms)
     \item \(D\) is the atom base (set of ground atoms)
       \medskip
     \item<2-> \(\sigma' \in \match{\sigma,b}{F,D}\) if
       \begin{itemize}\normalsize
-      \item \(\sigma \subseteq \sigma'\) and \(\vars{b} \subseteq \vars{\sigma'} \subseteq \vars{b} \cup \vars{\sigma}\),
-      \item \(b\sigma'\) holds if \(b\) is a comparison literal,
-      \item \(b\sigma' \in D\) if \(b\) is an atom, and
-      \item \(a\sigma' \not\in F\) if \(b\) is a symbolic literal of form \(\texttt{not}\ a\)
+      \item \(\sigma \subseteq \sigma'\) and \(\vars{b} \subseteq \vars{\sigma'} \subseteq \vars{b} \cup \vars{\sigma}\)
+        \smallskip
+      \item \(b\sigma'\) holds if \(b\) is a comparison literal
+      \item \(b\sigma' \in D\) if \(b\) is an atom
+      \item \(a\sigma' \not\in F\) if \(b\) is a negative literal of form \(\texttt{not}\ a\)
       \end{itemize}
     \end{itemize}
   \end{itemize}
@@ -60,25 +62,92 @@
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}{Rule grounding by backtracking}
-    \EmphAlgo{1}{
-      \Fn{\(\GroundBacktrack_{r,R,D}(\sigma, F, (b_1,\dots,b_n))\)}{
-        \eIf{\(n=0\)}{
-          \(\Let~H = \Head{r\sigma}\)\; % make it a set
-          \(\phantom{\Let~}B = \pbody{r\sigma} \setminus F \cup {}\)\;
-          \(\phantom{\Let~B = {}} \{ \texttt{not }a\sigma \mid a \in \nbody{r} \setminus R, a \in D \} \cup {}\)\;
-          \(\phantom{\Let~B = {}} \{ \texttt{not }a\sigma \mid a \in \nbody{r} \cap R \}\)\;
-          \lIf{\(B = \emptyset\)}{ \(F \leftarrow F \cup H\) }
-          \Return{\((\{ H \leftarrow B \mid \neglits{B} \cap F = \emptyset, H \cap F = \emptyset\}, F)\)}\;
-% \nbody{r\sigma} \cap F = \emptyset, H \cap F = \emptyset\}, F)\)}\;
-        }{
-          \(G \leftarrow \emptyset\)\;
-          \ForEach{\(\sigma' \in \match{\sigma,b_1}{F,D}\)}{
-            \((G,F) \leftarrow (G,F) \sqcup \GroundBacktrack_{r,R,D}(\sigma', F, (b_2,\dots,b_n))\)\;
-          }
-          \Return{\((G,F)\)}\;
+  \EmphAlgo{1}{
+    \Fn{\(\GroundBacktrack_{r,R,D}(\sigma, F, (b_1,\dots,b_n))\)}{
+      \eIf{\(n=0\)}{
+        \(\Let~H = \Head{r\sigma}\)\; % make it a set
+        \(\phantom{\Let~}B = \pbody{r\sigma} \setminus F \cup {}\)\;
+        \(\phantom{\Let~B = {}} \{ \texttt{not }a\sigma \mid a \in \nbody{r} \setminus R, a\sigma \in D \} \cup {}\)\;
+        \(\phantom{\Let~B = {}} \{ \texttt{not }a\sigma \mid a \in \nbody{r} \cap R \}\)\;
+        \lIf{\(B = \emptyset\)}{ \(F \leftarrow F \cup H\) }
+        \Return{\((\{ H \leftarrow B \mid \neglits{B} \cap F = \emptyset, H \cap F = \emptyset\}, F)\)}\;
+        % \nbody{r\sigma} \cap F = \emptyset, H \cap F = \emptyset\}, F)\)}\;
+      }{
+        \(G \leftarrow \emptyset\)\;
+        \ForEach{\(\sigma' \in \match{\sigma,b_1}{F,D}\)}{
+          \((G,F) \leftarrow (G,F) \sqcup \GroundBacktrack_{r,R,D}(\sigma', F, (b_2,\dots,b_n))\)\;
         }
+        \Return{\((G,F)\)}\;
       }
     }
+  }
+\end{frame}
+% ----------------------------------------------------------------------
+\begin{frame}{Ground rule one}{Hamiltonian cycle}
+
+  \begin{itemize}
+  \item $r\;={}$`{\tt omit(X,Y) :- not path(X,Y), edge(X,Y).}'
+  \item $R = \{ \mathtt{path(X,Y)} \}$
+  \item
+    \(
+    F = \left\{\!\begin{aligned}
+        & \mathtt{edge(a,b)}, \mathtt{edge(a,c)}, \mathtt{edge(b,c)}, \mathtt{edge(b,d)}, \\
+        & \mathtt{edge(c,a)}, \mathtt{edge(c,d)}, \mathtt{edge(d,a)}, \dots
+      \end{aligned}\right\}
+    \)
+  \end{itemize}
+  \pause\medskip
+  \begin{enumerate}
+  \item<only@2-6> ${\GroundBacktrack_{r,R,D}(\emptyset,                                   F, (\texttt{edge(X,Y), not path(X,Y)}))}$
+    \smallskip
+  \item<only@3-6> ${\GroundBacktrack_{r,R,D}(\{\mathtt{X}\mapsto a,\mathtt{Y}\mapsto b\}, F, (           \texttt{not path(X,Y)}))}$
+    \smallskip
+  \item<only@4-6> ${\GroundBacktrack_{r,R,D}(\{\mathtt{X}\mapsto a,\mathtt{Y}\mapsto b\}, F, (                                 ))}$
+    \begin{itemize}\normalsize
+    \item<only@5-6>[\itarrow] $(\{\,\texttt{omit(a,b) :- not path(a,b)}\,\},F)$
+    \end{itemize}
+  \end{enumerate}
+  \begin{itemize}
+  \item<only@6-> \structure{Summary}\small\\
+    \(
+    \begin{array}{ccccc}
+      {\texttt{edge(a,b)}}&\rightarrow&{\texttt{not path(a,b)}}&\Rightarrow&{\texttt{omit(a,b) :- not path(a,b)}}
+    \end{array}
+    \)
+  \item <only@8->[]\small\ \\[-10pt]
+    \(
+    \begin{array}{ccccc}
+%      {\texttt{edge(a,b)}}&\rightarrow&{\texttt{not path(a,b)}}&\Rightarrow&{\texttt{omit(a,b) :- not path(a,b)}}\\\pause[7]
+      {\texttt{edge(a,c)}}&\rightarrow&{\texttt{not path(a,c)}}&\Rightarrow&{\texttt{omit(a,c) :- not path(a,c)}}\\
+      {\texttt{edge(b,c)}}&\rightarrow&{\texttt{not path(b,c)}}&\Rightarrow&{\texttt{omit(b,c) :- not path(b,c)}}\\
+      {\texttt{edge(b,d)}}&\rightarrow&{\texttt{not path(b,d)}}&\Rightarrow&{\texttt{omit(b,d) :- not path(b,d)}}\\
+      {\texttt{edge(c,a)}}&\rightarrow&{\texttt{not path(c,a)}}&\Rightarrow&{\texttt{omit(c,a) :- not path(c,a)}}\\
+      {\texttt{edge(c,d)}}&\rightarrow&{\texttt{not path(c,d)}}&\Rightarrow&{\texttt{omit(c,d) :- not path(c,d)}}\\
+      {\texttt{edge(d,a)}}&\rightarrow&{\texttt{not path(d,a)}}&\Rightarrow&{\texttt{omit(d,a) :- not path(d,a)}}
+    \end{array}
+    \)
+  \end{itemize}
+\end{frame}
+% ----------------------------------------------------------------------
+\begin{frame}{Special termination cases}
+  \bigskip
+  \begin{itemize}
+  \item<2-> \texttt{a(42) :- not b(42)}
+    \qquad
+    $R=\emptyset$\quad $F=\alt<4->{\{b(42)\}}{\emptyset}$\quad $D=\alt<3->{\{b(42)\}}{\emptyset}$
+    \smallskip
+    \begin{itemize}\normalsize
+    \item[\itarrow] $(\texttt{\alt<4->{$\emptyset$}{\{a(42)\alt<3->{ :- not b(42)}{}.\}}},F\alt<3->{}{\cup\{\mathtt{a(42)}\}})$
+    \end{itemize}
+    \bigskip
+  \item<5-> \texttt{a(42) :- not a(42)}
+    \qquad
+    $R=\{a(42)\}$ \quad  $F=\emptyset$\quad $D=\emptyset$
+    \smallskip
+    \begin{itemize}\normalsize
+    \item[\itarrow] $(\{\texttt{a(42) :- not a(42)}\},F)$
+    \end{itemize}
+  \end{itemize}
 \end{frame}
 % ----------------------------------------------------------------------
 %
