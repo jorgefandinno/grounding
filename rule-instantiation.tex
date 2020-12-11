@@ -43,7 +43,7 @@
 \begin{frame}{An Example}
   \bigskip
   \begin{itemize}
-  \item Consider body \ `\(\texttt{p(X)},\texttt{q(X,Y)},\texttt{not r(Y)}\)'
+  \item Consider body order \ \((\texttt{p(X)},\texttt{q(X,Y)},\texttt{not r(Y)})\)
     \smallskip
     \begin{itemize}\normalsize
     \item \(F = \{\mathtt{r(3)}\}\)
@@ -70,7 +70,7 @@
         \(\phantom{\Let~B = {}} \{ \texttt{not }a\sigma \mid a \in \nbody{r} \setminus R, a\sigma \in D \} \cup {}\)\;
         \(\phantom{\Let~B = {}} \{ \texttt{not }a\sigma \mid a \in \nbody{r} \cap R \}\)\;
         \lIf{\(B = \emptyset\)}{ \(F \leftarrow F \cup H\) }
-        \Return{\((\{ H \leftarrow B \mid \neglits{B} \cap F = \emptyset, H \cap F = \emptyset\}, F)\)}\;
+        \Return{\((\{ H \leftarrow B \mid \neglits{B} \cap F = \emptyset, H \notin F\}, F)\)}\;
         % \nbody{r\sigma} \cap F = \emptyset, H \cap F = \emptyset\}, F)\)}\;
       }{
         \(G \leftarrow \emptyset\)\;
@@ -87,7 +87,7 @@
 
   \begin{itemize}
   \item $r\;={}$`{\tt omit(X,Y) :- not path(X,Y), edge(X,Y).}'
-  \item $R = \{ \mathtt{path(X,Y)} \}$
+  \item $R = \{\,\mathtt{path(X,Y)}\,\}$
   \item
     \(
     F = \left\{\!\begin{aligned}
