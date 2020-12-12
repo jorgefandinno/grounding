@@ -19,17 +19,17 @@
   \end{itemize}
 \end{frame}
 % ----------------------------------------------------------------------
-\begin{frame}{Matching\only<1-2>{\footnote{A match is a substitution \(\sigma\) such that \(a\sigma=b\) for a non-ground atom~\(a\)
-        \\and a ground atom~\(b\)\only<2>{; matching is also referred to as one-sided unification}.}} body literals}
+\begin{frame}{Matching\only<2-3>{\footnote{A match is a substitution \(\sigma\) such that \(a\sigma=b\) for a non-ground atom~\(a\)
+        \\and a ground atom~\(b\)\only<3>{; matching is also referred to as one-sided unification}.}} body literals}
   \bigskip
   \begin{itemize}
-  \item<3-> \(\match{\sigma,b}{F,D}\) is the set of \alert{all matches for literal} \(b\)
+  \item<4-> \(\match{\sigma,b}{F,D}\) is the set of \alert{all matches for literal} \(b\)
     \begin{itemize}\normalsize
     \item \(\sigma\) is a (ground) substitution
     \item \(F\) are true atoms (set of ground atoms)
     \item \(D\) is the atom base (set of ground atoms)
       \medskip
-    \item<4-> \(\sigma' \in \match{\sigma,b}{F,D}\) if
+    \item<5-> \(\sigma' \in \match{\sigma,b}{F,D}\) if
       \begin{itemize}\normalsize
       \item \(\sigma \subseteq \sigma'\) and \(\vars{b} \subseteq \vars{\sigma'} \subseteq \vars{b} \cup \vars{\sigma}\)
         \smallskip
