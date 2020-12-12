@@ -29,8 +29,8 @@
     \item \(F\) are true atoms (set of ground atoms)
     \item \(D\) is the atom base (set of ground atoms)
       \medskip
-    \item<5-7> \(\sigma' \in \match{\sigma,b}{F,D}\) if%
-      \only<5-6>{\,\footnote{\alt<6>{$\vars{\sigma}$ gives all variables mapped by $\sigma$ on ground terms}
+    \item<5-8> \(\sigma' \in \match{\sigma,b}{F,D}\) if%
+      \only<6-7>{\,\footnote{\alt<7>{$\vars{\sigma}$ gives all variables mapped by $\sigma$ on ground terms}
                                     {$\vars{a}$      gives all variables occurring in atom $a$}.}}
       \begin{itemize}\normalsize
       \item \(\sigma \subseteq \sigma'\) and \(\vars{b} \subseteq \vars{\sigma'} \subseteq \vars{b} \cup \vars{\sigma}\)
@@ -141,12 +141,12 @@
 \begin{frame}{Special termination cases}
   \bigskip
   \begin{itemize}
-  \item<2-> \texttt{a(42) :- not b(42)}
+  \item<2-> \texttt{a(42) :- not b(52)}
     \qquad
-    $R=\emptyset$\quad $F=\alt<4->{\{b(42)\}}{\emptyset}$\quad $D=\alt<3->{\{b(42)\}}{\emptyset}$
+    $R=\emptyset$\quad $F=\alt<4->{\{b(52)\}}{\emptyset}$\quad $D=\alt<3->{\{b(52)\}}{\emptyset}$
     \smallskip
     \begin{itemize}\normalsize
-    \item[\itarrow] $(\texttt{\alt<4->{$\emptyset$}{\{a(42)\alt<3->{ :- not b(42)}{}.\}}},F\alt<3->{}{\cup\{\mathtt{a(42)}\}})$
+    \item[\itarrow] $(\texttt{\alt<4->{$\emptyset$}{\{a(42)\alt<3->{ :- not b(52)}{}.\}}},F\alt<3->{}{\cup\{\mathtt{a(42)}\}})$
     \end{itemize}
     \bigskip
   \item<5-> \texttt{a(42) :- not a(42)}
