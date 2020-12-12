@@ -2,14 +2,14 @@
 \begin{frame}{Safe body order}
   \bigskip
   \begin{itemize}
-  \item Given safe rule \(r\), the tuple \((b_1, \dots, b_n)\) is a \alert{safe body order} if
+  \item<2-> Given safe rule \(r\), the tuple \((b_1, \dots, b_n)\) is a \alert{safe body order} if
     \begin{itemize}\normalsize
     \item \(\{ b_1 ,\dots , b_n \} = \body{r} \)
       \smallskip
     \item the body \(\{b_1, \dots, b_i\}\) is safe for each \(i\)
     \end{itemize}
     \bigskip
-  \item<2-> \structure{Example} \ Given rule `\texttt{:- node(X), not reach(X).}'
+  \item<3-> \structure{Example} \ Given rule `\texttt{:- node(X), not reach(X).}'
     \smallskip
     \begin{itemize}\normalsize
     \item \((\texttt{node(X)}, \texttt{not reach(X)})\) is a safe body order
