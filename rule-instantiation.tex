@@ -29,7 +29,9 @@
     \item \(F\) are true atoms (set of ground atoms)
     \item \(D\) is the atom base (set of ground atoms)
       \medskip
-    \item<5-> \(\sigma' \in \match{\sigma,b}{F,D}\) if
+    \item<5-7> \(\sigma' \in \match{\sigma,b}{F,D}\) if%
+      \only<5-6>{\,\footnote{\alt<6>{$\vars{\sigma}$ gives all variables mapped by $\sigma$ on ground terms}
+                                    {$\vars{a}$      gives all variables occurring in atom $a$}.}}
       \begin{itemize}\normalsize
       \item \(\sigma \subseteq \sigma'\) and \(\vars{b} \subseteq \vars{\sigma'} \subseteq \vars{b} \cup \vars{\sigma}\)
         \smallskip
