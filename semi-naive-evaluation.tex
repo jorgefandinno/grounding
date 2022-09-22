@@ -2,30 +2,30 @@
 \begin{frame}{Semi-naive grounding}
   \bigskip
   \begin{itemize}
-  \item<1-> \structure{Idea} \ (originates from database systems~\cite{abhuvi95a})
-    \par\smallskip
-    To avoid recomputing the same atoms at each level,
-    \par
-    semi-naive grounding focuses on newly generated atoms:
+    \item<1-> \structure{Idea} \ (originates from database systems~\cite{abhuvi95a})
+      \par\smallskip
+      To avoid recomputing the same atoms at each level,
+      \par
+      semi-naive grounding focuses on newly generated atoms:
 
-  \item<1->[] Any new atom at step $i$ relies on at least one atom
-    \par
-    newly derived at step $i-1$
+      \item<1->[] Any new atom at step $i$ relies on at least one atom
+      \par
+      newly derived at step $i-1$
 
-    \medskip
-  \item<2-> \structure{Recursive atoms} \
-    Given \(L_P = (C_1, \dots, C_n)\),
+      \medskip
+    \item<2-> \structure{Recursive atoms} \
+      Given \(L_P = (C_1, \dots, C_n)\),
 
-    an atom \(a_1\) is \alert{recursive} in component \(C_i\)
+      an atom \(a_1\) is \alert{recursive} in component \(C_i\)
 
-    if \(a_1\) unifies \(a_2\) such that
+      if \(a_1\) unifies \(a_2\) such that
 
-    \smallskip
-    \begin{itemize}\normalsize
-    \item \(r_1 \in C_i\) and \(r_2 \in C_j\) with \(i \leq j\)
-    \item \(a_1 \in \pbody{r_1}\cup\nbody{r_1}\)
-    \item \(a_2 \in \head{r_2}\)
-    \end{itemize}
+      \smallskip
+      \begin{itemize}\normalsize
+        \item \(r_1 \in C_i\) and \(r_2 \in C_j\) with \(i \leq j\)
+        \item \(a_1 \in \pbody{r_1}\cup\nbody{r_1}\)
+        \item \(a_2 \in \head{r_2}\)
+      \end{itemize}
   \end{itemize}
 \end{frame}
 % ----------------------------------------------------------------------
@@ -38,47 +38,48 @@
 \begin{frame}{Preparing components}
 
   \begin{itemize}
-  \item The set of \alert{prepared rules} for \(r \in C\) is
-    \[\arraycolsep=1.4pt
-      \left\{
-        \begin{array}{rcllllllll}
-               h&\leftarrow&\alert{n(b_1)},&       a(b_2) ,&\dots,&       a(b_{i-1}) ,&       a(b_i), & B      \\
-               h&\leftarrow&       o(b_1) ,&\alert{n(b_2)},&\dots,&       a(b_{i-1}) ,&       a(b_i), & B      \\
-          \vdots&          &\vdots         &               &\ddots&                   &\vdots         & \vdots \\
-               h&\leftarrow&       o(b_1) ,&       o(b_2) ,&\dots,&\alert{n(b_{i-1})},&       a(b_i), & B      \\
-               h&\leftarrow&       o(b_1) ,&       o(b_2) ,&\dots,&       o(b_{i-1}) ,&\alert{n(b_i)},& B
-        \end{array}
-      \right\}
-    \]
-  \item [] or \quad \(\{\;h \leftarrow n(b_{i+1}), \dots, n(b_j), b_{j+1}, \dots, b_n\;\}\) \quad if \(i=0\)
-  \item [] where
-    \begin{itemize}
-    \item \(\body{r} = \{ b_1, \dots, b_i, b_{i+1} \dots, b_j, b_{j+1}, \dots, b_n \}\)
-    \item \(b_k\in\pbody{r}\) for \(1\leq k \leq i\) is recursive
-    \item \(b_k\in\pbody{r}\) for \(i< k \leq j\) is not recursive
-    \item \(B = a(b_{i+1}), \dots, a(b_j), b_{j+1}, \dots, b_n\)
-    \end{itemize}
-  \item<2-> A \alert{prepared component} is the union of all its prepared rules
+    \item The set of \alert{prepared rules} for \(r \in C\) is
+          \[\arraycolsep=1.4pt
+            \left\{
+            \begin{array}{rcllllllll}
+              h      & \leftarrow & \alert{n(b_1)}, & a(b_2) ,        & \dots, & a(b_{i-1}) ,        & a(b_i),         & B      \\
+              h      & \leftarrow & o(b_1) ,        & \alert{n(b_2)}, & \dots, & a(b_{i-1}) ,        & a(b_i),         & B      \\
+              \vdots &            & \vdots          &                 & \ddots &                     & \vdots          & \vdots \\
+              h      & \leftarrow & o(b_1) ,        & o(b_2) ,        & \dots, & \alert{n(b_{i-1})}, & a(b_i),         & B      \\
+              h      & \leftarrow & o(b_1) ,        & o(b_2) ,        & \dots, & o(b_{i-1}) ,        & \alert{n(b_i)}, & B
+            \end{array}
+            \right\}
+          \]
+    \item [] or \quad \(\{\;h \leftarrow n(b_{i+1}), \dots, n(b_j), b_{j+1}, \dots, b_n\;\}\) \quad if \(i=0\)
+    \item [] where
+          \begin{itemize}
+            \item \(\body{r} = \{ b_1, \dots, b_i, b_{i+1} \dots, b_j, b_{j+1}, \dots, b_n \}\)
+            \item \(b_k\in\pbody{r}\) for \(1\leq k \leq i\) is recursive
+            \item \(b_k\in\pbody{r}\) for \(i< k \leq j\) is not recursive
+            \item \(B = a(b_{i+1}), \dots, a(b_j), b_{j+1}, \dots, b_n\)
+          \end{itemize}
+    \item<2-> A \alert{prepared component} is the union of all its prepared rules
   \end{itemize}
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}[fragile]{Preparing components}
-\newcommand{\Component}[1]{\(C_{#1}\)}
-\begin{SemiVerbatim}{.9}
-{\color{comment}\% prepared component \Component{1,1}}
-omit(X,Y) :- \alert{n(edge(X,Y))}, not path(X,Y).
-{\color{comment}\% prepared component \Component{1,2}}
-path(X,Y) :- \alert{n(edge(X,Y))}, not omit(X,Y).
-{\color{comment}\% prepared component \Component{2,1}}
-:- \alert{n(path(X,Y))}, \alert{n(path(X',Y))}, X < X'.
-...
-{\color{comment}\% prepared component \Component{7,1}}
-reach(Y) :- \alert{n(reach(X))}, \alert{a(path(X,Y))}.
-...
-\end{SemiVerbatim}
+  \newcommand{\Component}[1]{\(C_{#1}\)}
+  \begin{SemiVerbatim}{.9}
+    {\color{comment}\% prepared component \Component{1,1}}
+    omit(X,Y) :- \alert{n(edge(X,Y))}, not path(X,Y).
+      {\color{comment}\% prepared component \Component{1,2}}
+    path(X,Y) :- \alert{n(edge(X,Y))}, not omit(X,Y).
+      {\color{comment}\% prepared component \Component{2,1}}
+    :- \alert{n(path(X,Y))}, \alert{n(path(X',Y))}, X < X'.
+    ...
+      {\color{comment}\% prepared component \Component{7,1}}
+    reach(Y) :- \alert{n(reach(X))}, \alert{a(path(X,Y))}.
+    ...
+  \end{SemiVerbatim}
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}{Semi-naive evaluation-based grounding}
+  \vspace*{-10pt}\small%
   \begin{center}
     \EmphAlgo{.9}{
       \Fn{\(\GroundSemiNaive(P,A)\)}{
@@ -98,49 +99,49 @@ reach(Y) :- \alert{n(reach(X))}, \alert{a(path(X,Y))}.
   \end{center}
   \smallskip
   \begin{itemize}
-  \item<2-> \structure{Property} \ Given a safe normal program \(P\) and set of facts \(I\),
+    \item<2-> \structure{Property} \ Given a safe normal program \(P\) and set of facts \(I\),
 
-    \(P \cup I\) is equivalent to \(\GroundSemiNaive(P,\Head{I}) \cup I\)
+      \(P \cup I\) is equivalent to \(\GroundSemiNaive(P,\Head{I}) \cup I\)
   \end{itemize}
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}[fragile,shrink]{Grounding component \(C_{7,1}\)}{Hamiltonian cycle}
-\begin{SemiVerbatim}[\small]{.9}
-{\color{comment}\% grounding of
-\% reach(Y) :- {n(reach(X))}, a(path(X,Y)).}
+  \begin{SemiVerbatim}[\small]{.9}
+    {\color{comment}\% grounding of
+    \% reach(Y) :- {n(reach(X))}, a(path(X,Y)).}
 
-{\color{comment}\% Step 1 with N = A from previous step (reach(a)\({}\in{}\)A)}
-\alert{reach(b)} :- \only<1>{n(}\alert{reach(a)}\only<1>{)}, \only<1>{a(}path(a,b)\only<1>{)}.
-\alert{reach(c)} :- \only<1>{n(}\alert{reach(a)}\only<1>{)}, \only<1>{a(}path(a,c)\only<1>{)}.
+    {\color{comment}\% Step 1 with N = A from previous step (reach(a)\({}\in{}\)A)}
+    \alert{reach(b)} :- \only<1>{n(}\alert{reach(a)}\only<1>{)}, \only<1>{a(}path(a,b)\only<1>{)}.
+    \alert{reach(c)} :- \only<1>{n(}\alert{reach(a)}\only<1>{)}, \only<1>{a(}path(a,c)\only<1>{)}.
 
-{\color{comment}\% Step 2 with N = \{ reach(b), reach(c) \}}
-reach(c) :- \only<1>{n(}\alert{reach(b)}\only<1>{)}, \only<1>{a(}path(b,c)\only<1>{)}.
-\alert{reach(d)} :- \only<1>{n(}\alert{reach(b)}\only<1>{)}, \only<1>{a(}path(b,d)\only<1>{)}.
-reach(a) :- \only<1>{n(}\alert{reach(c)}\only<1>{)}, \only<1>{a(}path(c,a)\only<1>{)}.
-\alert{reach(d)} :- \only<1>{n(}\alert{reach(c)}\only<1>{)}, \only<1>{a(}path(c,d)\only<1>{)}.
+    {\color{comment}\% Step 2 with N = \{ reach(b), reach(c) \}}
+    reach(c) :- \only<1>{n(}\alert{reach(b)}\only<1>{)}, \only<1>{a(}path(b,c)\only<1>{)}.
+    \alert{reach(d)} :- \only<1>{n(}\alert{reach(b)}\only<1>{)}, \only<1>{a(}path(b,d)\only<1>{)}.
+    reach(a) :- \only<1>{n(}\alert{reach(c)}\only<1>{)}, \only<1>{a(}path(c,a)\only<1>{)}.
+    \alert{reach(d)} :- \only<1>{n(}\alert{reach(c)}\only<1>{)}, \only<1>{a(}path(c,d)\only<1>{)}.
 
-{\color{comment}\% Step 3 with N = \{ reach(d) \}}
-reach(a) :- \only<1>{n(}\alert{reach(d)}\only<1>{)}, \only<1>{a(}path(d,a)\only<1>{)}.
+    {\color{comment}\% Step 3 with N = \{ reach(d) \}}
+    reach(a) :- \only<1>{n(}\alert{reach(d)}\only<1>{)}, \only<1>{a(}path(d,a)\only<1>{)}.
 
-\only<2>{\color{comment}\% \alert{without} n/1 and a/1 of course}
-\end{SemiVerbatim}
+    \only<2>{\color{comment}\% \alert{without} n/1 and a/1 of course}
+  \end{SemiVerbatim}
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}[fragile]{Nonlinear programs}{Example}
-\bigskip
-\begin{SemiVerbatim}{.9}
-trans(U,V) :- edge(U,V).
-{\only<2>{\color{comment}\% }trans(U,W) :- \alert<1>{trans(U,V)}, \alert<1>{trans(V,W)}.}
-\only<2>{{{\color{comment}\% better written as:}}}
-\only<2>{trans(U,W) :- \alert{trans(U,V)}, edge(V,W).}
+  \bigskip
+  \begin{SemiVerbatim}{.9}
+    trans(U,V) :- edge(U,V).
+      {\only<2>{\color{comment}\% }trans(U,W) :- \alert<1>{trans(U,V)}, \alert<1>{trans(V,W)}.}
+    \only<2>{{{\color{comment}\% better written as:}}}
+    \only<2>{trans(U,W) :- \alert{trans(U,V)}, edge(V,W).}
 
-{\color{comment}\% prepared Component 1:}
-trans(U,V) :- n(edge(U,V)).
+    {\color{comment}\% prepared Component 1:}
+    trans(U,V) :- n(edge(U,V)).
 
-{\color{comment}\% prepared Component 2:}
-\only<1>{trans(U,W) :- n(trans(U,V)), a(trans(V,W)).}\only<2>{trans(U,W) :- n(trans(U,V)), a(edge(V,W)).}
-\visible<1>{trans(U,W) :- o(trans(U,V)), n(trans(V,W)).}
-\end{SemiVerbatim}
+      {\color{comment}\% prepared Component 2:}
+    \only<1>{trans(U,W) :- n(trans(U,V)), a(trans(V,W)).}\only<2>{trans(U,W) :- n(trans(U,V)), a(edge(V,W)).}
+    \visible<1>{trans(U,W) :- o(trans(U,V)), n(trans(V,W)).}
+  \end{SemiVerbatim}
 \end{frame}
 % ----------------------------------------------------------------------
 %

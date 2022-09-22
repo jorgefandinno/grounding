@@ -1,167 +1,168 @@
 % ----------------------------------------------------------------------
 \begin{frame}{Bottom up grounding}
+  \vspace*{-10pt}\small%
   \begin{itemize}
-  \item<1-> \structure{Idea} \
-    Ground \alert{relevant} rules by gradually extending the atom base
-  \item<2-> \structure{Relative ground instantiation} \ of a logic program $P$
-    \par wrt a set of ground atoms $D$
-    \begin{align*}
-      \cground{P}{D} & = \{ r \in \ground{P} \mid \alert{\pbody{r} \subseteq D} \}
-    \end{align*}
-  \item<only@3-> \structure{Algorithm}
+    \item<1-> \structure{Idea} \
+      Ground \alert{relevant} rules by gradually extending the atom base
+    \item<2-> \structure{Relative ground instantiation} \ of a logic program $P$
+      \par wrt a set of ground atoms $D$
+      \begin{align*}
+        \cground{P}{D} & = \{ r \in \ground{P} \mid \alert{\pbody{r} \subseteq D} \}
+      \end{align*}
+    \item<only@3-> \structure{Algorithm}
 
-    \EmphAlgo{0.8}{
-      \Fn{\(\GroundBottomUp(P,D)\)}{
-        \(G \leftarrow \cground{P}{D}\)\;
-        \If{\(\Head{G} \not\subseteq D\)}{
-          \Return \(\GroundBottomUp(P,D \alert{\cup \Head{G}})\)\;
+      \EmphAlgo{0.8}{
+        \Fn{\(\GroundBottomUp(P,D)\)}{
+          \(G \leftarrow \cground{P}{D}\)\;
+          \If{\(\Head{G} \not\subseteq D\)}{
+            \Return \(\GroundBottomUp(P,D \alert{\cup \Head{G}})\)\;
+          }
+          \Return \(G\)\;
         }
-        \Return \(G\)\;
       }
-    }
 
-  \item<only@4-> \structure{Property} \ Given a safe normal program \(P\) and set of ground facts \(I\),
+    \item<only@4-> \structure{Property} \ Given a safe normal program \(P\) and set of ground facts \(I\),
 
-    \(P \cup I\) is equivalent to \(\GroundBottomUp(P,\Head{I}) \cup I\)
+      \(P \cup I\) is equivalent to \(\GroundBottomUp(P,\Head{I}) \cup I\)
   \end{itemize}
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}[fragile,shrink]{Bottom up grounding, step 1}{Hamiltonian cycle}
-\begin{SemiVerbatim}[\small]{.9}
-{\color{comment}\% Step 1}
-path(a,b) :- not omit(a,b), \alert{edge(a,b)}.
-          \(\vdots\) {\color{comment}\% 7 rules total}
-path(d,a) :- not omit(d,a), \alert{edge(d,a)}.
+  \begin{SemiVerbatim}[\small]{.9}
+    {\color{comment}\% Step 1}
+    path(a,b) :- not omit(a,b), \alert{edge(a,b)}.
+    \(\vdots\) {\color{comment}\% 7 rules total}
+    path(d,a) :- not omit(d,a), \alert{edge(d,a)}.
 
-omit(a,b) :- not path(a,b), \alert{edge(a,b)}.
-          \(\vdots\) {\color{comment}\% 7 rules total}
-omit(d,a) :- not path(d,a), \alert{edge(d,a)}.
+    omit(a,b) :- not path(a,b), \alert{edge(a,b)}.
+    \(\vdots\) {\color{comment}\% 7 rules total}
+    omit(d,a) :- not path(d,a), \alert{edge(d,a)}.
 
-:- \alert{node(a)}, not on_path(a).  :- \alert{node(b)}, not on_path(b).
-:- \alert{node(c)}, not on_path(c).  :- \alert{node(d)}, not on_path(d).
+    :- \alert{node(a)}, not on_path(a).  :- \alert{node(b)}, not on_path(b).
+    :- \alert{node(c)}, not on_path(c).  :- \alert{node(d)}, not on_path(d).
 
-:- \alert{node(a)}, not reach(a).  :- \alert{node(b)}, not reach(b).
-:- \alert{node(c)}, not reach(c).  :- \alert{node(d)}, not reach(d).
+    :- \alert{node(a)}, not reach(a).  :- \alert{node(b)}, not reach(b).
+    :- \alert{node(c)}, not reach(c).  :- \alert{node(d)}, not reach(d).
 
-reach(a) :- \alert{start(a)}.
-\end{SemiVerbatim}
+    reach(a) :- \alert{start(a)}.
+  \end{SemiVerbatim}
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}[fragile,shrink]{Bottom up grounding, step 2}{Hamiltonian cycle}
-\begin{SemiVerbatim}[\small]{.9}
-{\color{comment}\% Step 2 \alert{and} rules of Step 1}
-:- \alert{path(a,c)}, \alert{path(b,c)}, a < b.
-:- \alert{path(b,d)}, \alert{path(c,d)}, b < c.
-:- \alert{path(c,a)}, \alert{path(d,a)}, c < d.
+  \begin{SemiVerbatim}[\small]{.9}
+    {\color{comment}\% Step 2 \alert{and} rules of Step 1}
+    :- \alert{path(a,c)}, \alert{path(b,c)}, a < b.
+    :- \alert{path(b,d)}, \alert{path(c,d)}, b < c.
+    :- \alert{path(c,a)}, \alert{path(d,a)}, c < d.
 
-:- \alert{path(a,b)}, \alert{path(a,c)}, b < c.
-:- \alert{path(c,a)}, \alert{path(c,d)}, a < d.
-:- \alert{path(b,c)}, \alert{path(b,d)}, c < d.
+    :- \alert{path(a,b)}, \alert{path(a,c)}, b < c.
+    :- \alert{path(c,a)}, \alert{path(c,d)}, a < d.
+    :- \alert{path(b,c)}, \alert{path(b,d)}, c < d.
 
-on_path(a) :- \alert{path(c,a)}, \alert{path(a,c)}.
-           \(\vdots\) {\color{comment}\% 12 rules total}
-on_path(d) :- \alert{path(c,d)}, \alert{path(d,a)}.
+    on_path(a) :- \alert{path(c,a)}, \alert{path(a,c)}.
+    \(\vdots\) {\color{comment}\% 12 rules total}
+    on_path(d) :- \alert{path(c,d)}, \alert{path(d,a)}.
 
-reach(b) :- \alert{reach(a)}, \alert{path(a,b)}.
-reach(c) :- \alert{reach(a)}, \alert{path(a,c)}.
-\end{SemiVerbatim}
+    reach(b) :- \alert{reach(a)}, \alert{path(a,b)}.
+    reach(c) :- \alert{reach(a)}, \alert{path(a,c)}.
+  \end{SemiVerbatim}
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}[fragile,shrink]{Bottom up grounding, step 3 and 4}{Hamiltonian cycle}
   \bigskip
-\begin{SemiVerbatim}{.9}
-{\color{comment}\% Step 3 \alert{and} rules of Step 2}
-reach(c) :- \alert{reach(b)}, path(b,c).
-reach(d) :- \alert{reach(b)}, path(b,d).
-reach(a) :- \alert{reach(c)}, path(c,a).
-reach(d) :- \alert{reach(c)}, path(c,d).
+  \begin{SemiVerbatim}{.9}
+    {\color{comment}\% Step 3 \alert{and} rules of Step 2}
+    reach(c) :- \alert{reach(b)}, path(b,c).
+    reach(d) :- \alert{reach(b)}, path(b,d).
+    reach(a) :- \alert{reach(c)}, path(c,a).
+    reach(d) :- \alert{reach(c)}, path(c,d).
 
-{\color{comment}\% Step 4 \alert{and} rules of Step 3}
-reach(a) :- \alert{reach(d)}, path(d,a).
-\end{SemiVerbatim}
+      {\color{comment}\% Step 4 \alert{and} rules of Step 3}
+    reach(a) :- \alert{reach(d)}, path(d,a).
+  \end{SemiVerbatim}
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}{Properties of bottom-up grounding}
   \bigskip
   \begin{itemize}
-  \item Grounds only \alert{relevant} rules
-    \begin{itemize}\normalsize
-    \item each positive body literal has a non-cyclic derivation \\
-      (ignoring negative literals)
-    \end{itemize}
-    \smallskip
-  \item \alert{Re-grounds} rules from previous steps
-    \medskip
-  \item Performs no \alert{simplifications}
+    \item Grounds only \alert{relevant} rules
+          \begin{itemize}\normalsize
+            \item each positive body literal has a non-cyclic derivation \\
+                  (ignoring negative literals)
+          \end{itemize}
+          \smallskip
+    \item \alert{Re-grounds} rules from previous steps
+          \medskip
+    \item Performs no \alert{simplifications}
   \end{itemize}
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}{Improving bottom-up grounding}
   \bigskip
   \begin{itemize}
-  \item Use dependencies to \alert{focus} grounding
-    \begin{itemize}\normalsize
-    \item begin with partial atom base given by facts
-    \item use rule dependency graph of program to obtain \alert{components} that can be \alert{grounded successively}
-    \end{itemize}
-    \medskip
-  \item Adapt \alert{semi-naive evaluation} put forward in the database field
-    \begin{itemize}\normalsize
-    \item avoids redundancies when grounding
-    \end{itemize}
-    \medskip
-  \item Perform \alert{simplifications} during grounding
-    \begin{itemize}\normalsize
-    \item remove literals from rule bodies if possible
-    \item omit rules if body cannot be satisfied
-    \end{itemize}
+    \item Use dependencies to \alert{focus} grounding
+          \begin{itemize}\normalsize
+            \item begin with partial atom base given by facts
+            \item use rule dependency graph of program to obtain \alert{components} that can be \alert{grounded successively}
+          \end{itemize}
+          \medskip
+    \item Adapt \alert{semi-naive evaluation} put forward in the database field
+          \begin{itemize}\normalsize
+            \item avoids redundancies when grounding
+          \end{itemize}
+          \medskip
+    \item Perform \alert{simplifications} during grounding
+          \begin{itemize}\normalsize
+            \item remove literals from rule bodies if possible
+            \item omit rules if body cannot be satisfied
+          \end{itemize}
   \end{itemize}
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}{Program dependencies}
   \smallskip
   \begin{itemize}
-  \item<2-> \structure{Dependency graph} of program \(P\)
-    \begin{itemize}\normalsize
-    \item<only@-3> rule \(r_2\) \alert{depends} on rule \(r_1\)
-      \\if \(b\in\pbody{r_2}\cup\nbody{r_2}\) unifies with \(h\in\head{r_1}\)
-      \smallskip
-    \item \(G_P=(P,E)\) where \(E=\{ (r_1,r_2) \mid r_2 \text{ depends on } r_1 \}\)
-    \end{itemize}
-    \medskip
-  \item<3-> \structure{Positive dependency graph} of program \(P\)
-    \begin{itemize}\normalsize
-    \item<only@-3> rule \(r_2\) \alert{positively depends} on rule \(r_1\)
-      \\if \(b\in\pbody{r_2}\) unifies with \(h\in\Head{r_1}\)
-      \smallskip
-    \item \(G^+_P=(P,E)\) where \(E=\{ (r_1,r_2) \mid r_2 \text{ positively depends on } r_1 \}\)
-    \end{itemize}
-    \medskip
-  \item<only@5-> \structure{Strongly connected components} of a directed graph form a partition into sub-graphs
-    in which each node is reachable from any other node
-    \medskip
-  \item<only@6-> \structure{Topological ordering} \
-    of strongly connected components
-    \begin{itemize}\normalsize
-    \item<7-> \((C_1,\dots,C_n)\) is a topological ordering of \(G_P\)\only<7>{,}
-      \smallskip
-    \item[]<only@7>
-      that is,
+    \item<2-> \structure{Dependency graph} of program \(P\)
+      \begin{itemize}\normalsize
+        \item<only@-3> rule \(r_2\) \alert{depends} on rule \(r_1\)
+          \\if \(b\in\pbody{r_2}\cup\nbody{r_2}\) unifies with \(h\in\head{r_1}\)
+          \smallskip
+        \item \(G_P=(P,E)\) where \(E=\{ (r_1,r_2) \mid r_2 \text{ depends on } r_1 \}\)
+      \end{itemize}
+      \medskip
+    \item<3-> \structure{Positive dependency graph} of program \(P\)
+      \begin{itemize}\normalsize
+        \item<only@-3> rule \(r_2\) \alert{positively depends} on rule \(r_1\)
+          \\if \(b\in\pbody{r_2}\) unifies with \(h\in\Head{r_1}\)
+          \smallskip
+        \item \(G^+_P=(P,E)\) where \(E=\{ (r_1,r_2) \mid r_2 \text{ positively depends on } r_1 \}\)
+      \end{itemize}
+      \medskip
+    \item<only@5-> \structure{Strongly connected components} of a directed graph form a partition into sub-graphs
+      in which each node is reachable from any other node
+      \medskip
+    \item<only@6-> \structure{Topological ordering} \
+      of strongly connected components
+      \begin{itemize}\normalsize
+        \item<7-> \((C_1,\dots,C_n)\) is a topological ordering of \(G_P\)\only<7>{,}
+          \smallskip
+          \item[]<only@7>
+          that is,
+          \(
+          (r_1,r_2)\in E,
+          r_1\in C_i,
+          r_2\in C_j,
+          \)
+          implies
+          \(
+          i\leq j\)
+          \smallskip
+        \item<only@8-> \((C_{i,1},\dots,C_{i,m_i})\) is a topological ordering of each \(G^+_{C_i}\)
+      \end{itemize}
+      \item<only@9->[]\structure{\itarrow} \
       \(
-      (r_1,r_2)\in E,
-      r_1\in C_i,
-      r_2\in C_j,
+      L_P = (C_{1,1},\dots,C_{1,m_1},\dots,C_{n,1},\dots,C_{n,m_n})
       \)
-      implies
-      \(
-      i\leq j\)
-      \smallskip
-    \item<only@8-> \((C_{i,1},\dots,C_{i,m_i})\) is a topological ordering of each \(G^+_{C_i}\)
-    \end{itemize}
-  \item<only@9->[]\structure{\itarrow} \
-    \(
-    L_P = (C_{1,1},\dots,C_{1,m_1},\dots,C_{n,1},\dots,C_{n,m_n})
-    \)
   \end{itemize}
 \end{frame}
 % ----------------------------------------------------------------------
@@ -187,51 +188,51 @@ reach(a) :- \alert{reach(d)}, path(d,a).
   \end{center}
   \bigskip
   \begin{itemize}
-  \item<2-> \structure{Property} \ Given a safe normal program \(P\) and set of facts \(I\),
+    \item<2-> \structure{Property} \ Given a safe normal program \(P\) and set of facts \(I\),
 
-    \(P \cup I\) is equivalent to \(\GroundWithDependencies(P,\Head{I}) \cup I\)
+      \(P \cup I\) is equivalent to \(\GroundWithDependencies(P,\Head{I}) \cup I\)
   \end{itemize}
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}[fragile,shrink]{Grounding with dependencies}{Hamiltonian cycle}
-\newcommand{\Component}[1]{\(C_{#1}\)}
-\begin{SemiVerbatim}{.9}
-{\color{comment}\% component \Component{1,1}}
-omit(a,b) :- not path(a,b), \alert{edge(a,b)}.
-          \(\vdots\) {\color{comment}\% 7 rules total}
-omit(d,a) :- not path(d,a), \alert{edge(d,a)}.
+  \newcommand{\Component}[1]{\(C_{#1}\)}
+  \begin{SemiVerbatim}{.9}
+    {\color{comment}\% component \Component{1,1}}
+    omit(a,b) :- not path(a,b), \alert{edge(a,b)}.
+    \(\vdots\) {\color{comment}\% 7 rules total}
+    omit(d,a) :- not path(d,a), \alert{edge(d,a)}.
 
-{\color{comment}\% component \Component{1,2}}
-path(a,b) :- not omit(a,b), \alert{edge(a,b)}.
-          \(\vdots\) {\color{comment}\% 7 rules total}
-path(d,a) :- not omit(d,a), \alert{edge(d,a)}.
+    {\color{comment}\% component \Component{1,2}}
+    path(a,b) :- not omit(a,b), \alert{edge(a,b)}.
+    \(\vdots\) {\color{comment}\% 7 rules total}
+    path(d,a) :- not omit(d,a), \alert{edge(d,a)}.
 
-...
-\end{SemiVerbatim}
-\vspace{-.8cm}
-\begin{itemize}
-\item<2-> No re-grounding if there is no positive recursion in a component
-\end{itemize}
-\smallskip
+    ...
+  \end{SemiVerbatim}
+  \vspace{-.8cm}
+  \begin{itemize}
+    \item<2-> No re-grounding if there is no positive recursion in a component
+  \end{itemize}
+  \smallskip
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}[fragile,shrink]{Grounding component \(C_{7,1}\)}{Hamiltonian cycle}
-\begin{SemiVerbatim}{.9}
-{\color{comment}\% Step 1}
-reach(b) :- \alert{reach(a)}, \alert{path(a,b)}.
-reach(c) :- \alert{reach(a)}, \alert{path(a,c)}.
+  \begin{SemiVerbatim}{.9}
+    {\color{comment}\% Step 1}
+    reach(b) :- \alert{reach(a)}, \alert{path(a,b)}.
+    reach(c) :- \alert{reach(a)}, \alert{path(a,c)}.
 
-{\color{comment}\% Step 2 \alert{and} rules of Step 1}
-reach(c) :- \alert{reach(b)}, path(b,c).
-reach(d) :- \alert{reach(b)}, path(b,d).
-reach(a) :- \alert{reach(c)}, path(c,a).
-reach(d) :- \alert{reach(c)}, path(c,d).
+    {\color{comment}\% Step 2 \alert{and} rules of Step 1}
+    reach(c) :- \alert{reach(b)}, path(b,c).
+    reach(d) :- \alert{reach(b)}, path(b,d).
+    reach(a) :- \alert{reach(c)}, path(c,a).
+    reach(d) :- \alert{reach(c)}, path(c,d).
 
-{\color{comment}\% Step 3 \alert{and} rules of Step 2}
-reach(a) :- \alert{reach(d)}, path(d,a).
+      {\color{comment}\% Step 3 \alert{and} rules of Step 2}
+    reach(a) :- \alert{reach(d)}, path(d,a).
 
-{\color{comment}\% less re-grounding but still...}
-\end{SemiVerbatim}
+      {\color{comment}\% less re-grounding but still...}
+  \end{SemiVerbatim}
 \end{frame}
 % ----------------------------------------------------------------------
 %
