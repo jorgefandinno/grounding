@@ -131,7 +131,7 @@
   \bigskip
   \begin{SemiVerbatim}{.9}
     trans(U,V) :- edge(U,V).
-      {\only<2>{\color{comment}\% }trans(U,W) :- \alert<1>{trans(U,V)}, \alert<1>{trans(V,W)}.}
+    {\only<2>{\color{comment}\% }trans(U,W) :- \alert<1>{trans(U,V)}, \alert<1>{trans(V,W)}.}
     \only<2>{{{\color{comment}\% better written as:}}}
     \only<2>{trans(U,W) :- \alert{trans(U,V)}, edge(V,W).}
 
