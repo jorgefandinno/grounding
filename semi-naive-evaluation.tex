@@ -50,13 +50,13 @@
         \end{array}
       \right\}
     \]
-  \item [] or \quad \(\{\;h \leftarrow n(b_{i+1}), \dots, n(b_j), b_{j+1}, \dots, b_n\;\}\) \quad if \(i=0\)
+  \item [] or \quad \(\{\;h \leftarrow n(b_{i+1}), \dots, n(b_j), \neg b_{j+1}, \dots, \neg b_n\;\}\) \quad if \(i=0\)
   \item [] where
     \begin{itemize}
-    \item \(\body{r} = \{ b_1, \dots, b_i, b_{i+1} \dots, b_j, b_{j+1}, \dots, b_n \}\)
+    \item \(\body{r} = \{ b_1, \dots, b_i, b_{i+1} \dots, b_j, \neg b_{j+1}, \dots, \neg b_n \}\)
     \item \(b_k\in\pbody{r}\) for \(1\leq k \leq i\) is recursive
     \item \(b_k\in\pbody{r}\) for \(i< k \leq j\) is not recursive
-    \item \(B = a(b_{i+1}), \dots, a(b_j), b_{j+1}, \dots, b_n\)
+    \item \(B = a(b_{i+1}), \dots, a(b_j), \neg b_{j+1}, \dots, \neg b_n\)
     \end{itemize}
   \item<2-> A \alert{prepared component} is the union of all its prepared rules
   \end{itemize}

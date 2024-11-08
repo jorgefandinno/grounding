@@ -124,7 +124,7 @@ reach(a) :- \alert{reach(d)}, path(d,a).
   \item<2-> \structure{Dependency graph} of program \(P\)
     \begin{itemize}\normalsize
     \item<only@-3> rule \(r_2\) \alert{depends} on rule \(r_1\)
-      \\if \(b\in\pbody{r_2}\cup\nbody{r_2}\) unifies with \(h\in\head{r_1}\)
+      \\if \(b\in\pbody{r_2}\cup\nbody{r_2}\) unifies with \(h\in\Head{r_1}\)
       \smallskip
     \item \(G_P=(P,E)\) where \(E=\{ (r_1,r_2) \mid r_2 \text{ depends on } r_1 \}\)
     \end{itemize}

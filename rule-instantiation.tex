@@ -33,7 +33,7 @@
       \only<6-7>{\,\footnote{\alt<7>{$\vars{\sigma}$ gives all variables mapped by $\sigma$ on ground terms}
                                     {$\vars{a}$      gives all variables occurring in atom $a$}.}}
       \begin{itemize}\normalsize
-      \item \(\sigma \subseteq \sigma'\) and \(\vars{b} \subseteq \vars{\sigma'} \subseteq \vars{b} \cup \vars{\sigma}\)
+      \item \(\sigma \subseteq \sigma'\) and \(\vars{\sigma'} = \vars{b} \cup \vars{\sigma}\)
         \smallskip
       \item \(b\sigma'\) holds if \(b\) is a comparison literal
       \item \(b\sigma' \in D\) if \(b\) is an atom
@@ -65,6 +65,7 @@
 \end{frame}
 % ----------------------------------------------------------------------
 \begin{frame}{Rule grounding by backtracking}
+  \small
   \EmphAlgo{1}{
     \Fn{\(\GroundBacktrack_{r,R,D}(\sigma, F, (b_1,\dots,b_n))\)}{
       \eIf{\(n=0\)}{
